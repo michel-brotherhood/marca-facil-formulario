@@ -101,19 +101,35 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
                 updateFormData({ dadosCnpjCorretos: value === "true" })
               }
             >
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
                 <RadioGroupItem value="true" id="dados-corretos-sim" />
                 <Label htmlFor="dados-corretos-sim" className="font-normal cursor-pointer">
-                  Sim, estão corretos
+                  SIM
                 </Label>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
                 <RadioGroupItem value="false" id="dados-corretos-nao" />
                 <Label htmlFor="dados-corretos-nao" className="font-normal cursor-pointer">
-                  Não, há divergências
+                  NÃO
                 </Label>
               </div>
             </RadioGroup>
+            <Card className="mt-3 bg-blue-50 border-blue-200">
+              <CardContent className="pt-4 pb-4">
+                <p className="text-sm font-medium">📞 Precisa de ajuda com os dados?</p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Entre em contato conosco via{" "}
+                  <a href="https://wa.me/5521997941008" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                    WhatsApp
+                  </a>
+                  {" "}ou{" "}
+                  <a href="https://calendly.com/admin-marcafacil/30min" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                    agende uma videoconferência gratuita
+                  </a>
+                  .
+                </p>
+              </CardContent>
+            </Card>
           </div>
 
           <div>
@@ -126,26 +142,47 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
                 updateFormData({ representante: value })
               }
             >
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
                 <RadioGroupItem value="sim" id="responsavel-sim" />
                 <Label htmlFor="responsavel-sim" className="font-normal cursor-pointer">
-                  Sim, sou o responsável legal
+                  SIM
                 </Label>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
                 <RadioGroupItem value="nao" id="responsavel-nao" />
                 <Label htmlFor="responsavel-nao" className="font-normal cursor-pointer">
-                  Não
+                  NÃO
                 </Label>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
                 <RadioGroupItem value="procurador" id="responsavel-procurador" />
                 <Label htmlFor="responsavel-procurador" className="font-normal cursor-pointer">
-                  Sou procurador
+                  PROCURADOR
                 </Label>
               </div>
             </RadioGroup>
+            <p className="mt-2 text-sm font-medium text-orange-600">
+              ⚠️ Apenas o Representante Legal ou procurador devidamente constituído do Titular podem contratar nossos serviços.
+            </p>
           </div>
+
+          {formData.representante === "procurador" && (
+            <div>
+              <Label htmlFor="procuracaoPJ">Upload da Procuração (opcional)</Label>
+              <div className="mt-2 flex items-center justify-center border-2 border-dashed border-border rounded-lg p-6 hover:border-primary transition-colors cursor-pointer">
+                <label htmlFor="procuracaoPJ" className="cursor-pointer text-center">
+                  <div className="text-4xl mb-2">📋</div>
+                  <p className="text-sm text-muted-foreground">Clique para fazer upload da procuração</p>
+                </label>
+                <Input
+                  id="procuracaoPJ"
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  className="hidden"
+                />
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>

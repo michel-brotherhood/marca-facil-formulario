@@ -191,41 +191,44 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               updateFormData({ preferenciaContato: value })
             }
           >
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="whatsapp" id="whatsapp" />
-              <Label htmlFor="whatsapp" className="font-normal cursor-pointer">
-                WhatsApp
+              <Label htmlFor="whatsapp" className="font-normal cursor-pointer flex items-center gap-2">
+                📱 WhatsApp
               </Label>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="email" id="email-pref" />
-              <Label htmlFor="email-pref" className="font-normal cursor-pointer">
-                E-mail
+              <Label htmlFor="email-pref" className="font-normal cursor-pointer flex items-center gap-2">
+                ✉️ E-mail
               </Label>
             </div>
           </RadioGroup>
         </div>
 
         <div>
-          <Label htmlFor="rgCliente">Upload do RG (Opcional)</Label>
-          <Input
-            id="rgCliente"
-            type="file"
-            accept=".pdf,.jpg,.jpeg,.png"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file && file.size > 5 * 1024 * 1024) {
-                toast.error("O arquivo deve ter no máximo 5MB");
-                e.target.value = "";
-                return;
-              }
-              updateFormData({ rgClienteUrl: file?.name || "" });
-            }}
-            className="cursor-pointer"
-          />
-          <p className="text-xs text-muted-foreground mt-1">
-            Formatos aceitos: PDF, JPG, PNG. Tamanho máximo: 5MB
-          </p>
+          <Label htmlFor="rgCliente">Upload do RG (opcional)</Label>
+          <div className="mt-2 flex items-center justify-center border-2 border-dashed border-border rounded-lg p-6 hover:border-primary transition-colors cursor-pointer">
+            <label htmlFor="rgCliente" className="cursor-pointer text-center">
+              <div className="text-4xl mb-2">📄</div>
+              <p className="text-sm text-muted-foreground">Clique para fazer upload do RG</p>
+            </label>
+            <Input
+              id="rgCliente"
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file && file.size > 5 * 1024 * 1024) {
+                  toast.error("O arquivo deve ter no máximo 5MB");
+                  e.target.value = "";
+                  return;
+                }
+                updateFormData({ rgClienteUrl: file?.name || "" });
+              }}
+              className="hidden"
+            />
+          </div>
         </div>
       </div>
     </div>

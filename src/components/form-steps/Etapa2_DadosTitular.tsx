@@ -18,21 +18,21 @@ export const Etapa2_DadosTitular = ({ formData, updateFormData }: Etapa2Props) =
       </div>
 
       <div>
-        <Label className="mb-3 block">Tipo de Titular *</Label>
+        <Label className="mb-3 block">O Titular (dono) da marca é Pessoa Física ou Pessoa Jurídica? *</Label>
         <RadioGroup
           value={formData.tipo}
           onValueChange={(value: "pf" | "pj") => updateFormData({ tipo: value })}
         >
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
             <RadioGroupItem value="pf" id="pf" />
-            <Label htmlFor="pf" className="font-normal cursor-pointer">
-              Pessoa Física
+            <Label htmlFor="pf" className="font-normal cursor-pointer flex items-center gap-2">
+              👤 Pessoa Física
             </Label>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
             <RadioGroupItem value="pj" id="pj" />
-            <Label htmlFor="pj" className="font-normal cursor-pointer">
-              Pessoa Jurídica
+            <Label htmlFor="pj" className="font-normal cursor-pointer flex items-center gap-2">
+              🏢 Pessoa Jurídica
             </Label>
           </div>
         </RadioGroup>

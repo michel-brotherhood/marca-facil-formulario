@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { FormState, initialFormState } from "@/types/formTypes";
+import { Header } from "@/components/Header";
+import { Sidebar } from "@/components/Sidebar";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Etapa1_DadosCliente } from "@/components/form-steps/Etapa1_DadosCliente";
 import { Etapa2_DadosTitular } from "@/components/form-steps/Etapa2_DadosTitular";
@@ -210,50 +212,57 @@ const Index = () => {
 
   if (formState.currentStep === 5) {
     return (
-      <div className="min-h-screen bg-background py-12 px-4">
-        <Etapa5_Obrigado />
+      <div className="min-h-screen bg-background">
+        <Header currentStep={5} totalSteps={5} />
+        <div className="py-12 px-4">
+          <Etapa5_Obrigado />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-foreground mb-2">MarcaFácil</h1>
-          <p className="text-muted-foreground">Registro de Marca Simplificado</p>
+    <div className="min-h-screen bg-background">
+      <Header currentStep={formState.currentStep} totalSteps={5} />
+      
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <Card>
+              <CardContent className="pt-8 pb-6">
+                <div className="lg:hidden mb-6">
+                  <ProgressBar currentStep={formState.currentStep} totalSteps={5} />
+                </div>
+
+                <div className="mt-4">{renderStep()}</div>
+
+                <div className="flex justify-between mt-8 pt-6 border-t">
+                  {formState.currentStep > 1 && formState.currentStep < 5 && (
+                    <Button onClick={prevStep} variant="outline" className="gap-2">
+                      Voltar
+                    </Button>
+                  )}
+
+                  {formState.currentStep < 4 && (
+                    <Button onClick={nextStep} className="ml-auto gap-2">
+                      Próximo
+                    </Button>
+                  )}
+
+                  {formState.currentStep === 4 && (
+                    <Button onClick={handleSubmit} className="ml-auto gap-2">
+                      Enviar Solicitação
+                    </Button>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="hidden lg:block">
+            <Sidebar />
+          </div>
         </div>
-
-        <Card>
-          <CardContent className="pt-8 pb-6">
-            <ProgressBar currentStep={formState.currentStep} totalSteps={5} />
-
-            <div className="mt-8">{renderStep()}</div>
-
-            <div className="flex justify-between mt-8 pt-6 border-t">
-              {formState.currentStep > 1 && formState.currentStep < 5 && (
-                <Button onClick={prevStep} variant="outline" className="gap-2">
-                  <ArrowLeft className="w-4 h-4" />
-                  Voltar
-                </Button>
-              )}
-
-              {formState.currentStep < 4 && (
-                <Button onClick={nextStep} className="ml-auto gap-2">
-                  Próximo
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              )}
-
-              {formState.currentStep === 4 && (
-                <Button onClick={handleSubmit} className="ml-auto gap-2">
-                  Enviar Solicitação
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              )}
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );

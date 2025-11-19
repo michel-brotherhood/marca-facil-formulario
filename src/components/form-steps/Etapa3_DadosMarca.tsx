@@ -15,7 +15,7 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-foreground mb-2">Dados da Marca</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-2">Informações sobre a Marca</h2>
         <p className="text-muted-foreground">Informações sobre a marca a ser registrada</p>
       </div>
 
@@ -39,22 +39,22 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
               updateFormData({ utilizacao: value })
             }
           >
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="produtos" id="produtos" />
               <Label htmlFor="produtos" className="font-normal cursor-pointer">
-                Produtos
+                Produzir e/ou Vender PRODUTOS
               </Label>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="servicos" id="servicos" />
               <Label htmlFor="servicos" className="font-normal cursor-pointer">
-                Serviços
+                Prestação de SERVIÇOS
               </Label>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="outros" id="outros" />
               <Label htmlFor="outros" className="font-normal cursor-pointer">
-                Outros
+                OUTROS
               </Label>
             </div>
           </RadioGroup>
@@ -80,16 +80,16 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
             value={formData.possuiLogo === null ? "" : formData.possuiLogo.toString()}
             onValueChange={(value) => updateFormData({ possuiLogo: value === "true" })}
           >
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="true" id="logo-sim" />
               <Label htmlFor="logo-sim" className="font-normal cursor-pointer">
-                Sim, possuo logotipo
+                SIM
               </Label>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="false" id="logo-nao" />
               <Label htmlFor="logo-nao" className="font-normal cursor-pointer">
-                Não, apenas o nome
+                NÃO
               </Label>
             </div>
           </RadioGroup>
@@ -97,42 +97,49 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
 
         {formData.possuiLogo === true && (
           <div>
-            <Label htmlFor="logo">Upload do Logotipo *</Label>
-            <Input
-              id="logo"
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file && file.size > 5 * 1024 * 1024) {
-                  toast.error("O arquivo deve ter no máximo 5MB");
-                  e.target.value = "";
-                  return;
-                }
-                updateFormData({ logoUrl: file?.name || "" });
-              }}
-              required
-              className="cursor-pointer"
-            />
+            <Label htmlFor="logo">Upload do Logotipo</Label>
             
-            <Card className="mt-4 bg-accent/10 border-accent">
+            <Card className="mt-4 bg-muted/50">
               <CardContent className="pt-6">
-                <h4 className="font-semibold mb-2 text-accent-foreground">
+                <h4 className="font-semibold mb-3">
                   📋 Especificações Técnicas
                 </h4>
-                <ul className="text-sm space-y-1 text-muted-foreground">
-                  <li>• Formato: JPG, PNG ou PDF</li>
-                  <li>• Tamanho máximo: 5MB</li>
-                  <li>• Resolução mínima: 300 DPI</li>
-                  <li>• Dimensões recomendadas: 8cm x 8cm</li>
+                <ul className="text-sm space-y-1 text-muted-foreground mb-4">
+                  <li>• <strong>Formato válido:</strong> JPG</li>
+                  <li>• <strong>Tamanho mínimo:</strong> 945 × 945 px (8 × 8 cm)</li>
+                  <li>• <strong>Resolução mínima:</strong> 300 dpi</li>
+                  <li>• <strong>Tamanho máximo:</strong> 2 MB</li>
+                  <li>• <strong>Padrão de cores:</strong> RGB</li>
                 </ul>
                 
-                <div className="mt-4 p-3 bg-primary/10 rounded-md">
-                  <p className="text-sm font-medium text-primary mb-1">💡 Dica de Ouro</p>
-                  <p className="text-xs text-muted-foreground">
-                    Para registros mais abrangentes, considere enviar seu logotipo em preto e
-                    branco. Isso permite maior flexibilidade no uso de cores posteriormente.
+                <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-md mb-4">
+                  <p className="text-sm font-semibold mb-1">💡 DICA DE OURO</p>
+                  <p className="text-sm text-muted-foreground">
+                    A menos que uma cor ou combinação de cores específica seja elemento essencial da sua marca, recomendamos apresentar o logotipo em <strong>preto e branco</strong>.
                   </p>
+                </div>
+
+                <div className="flex items-center justify-center border-2 border-dashed border-border rounded-lg p-8 hover:border-primary transition-colors cursor-pointer">
+                  <label htmlFor="logo" className="cursor-pointer text-center">
+                    <div className="text-5xl mb-2">🎨</div>
+                    <p className="text-sm text-muted-foreground">Clique para fazer upload do logotipo</p>
+                  </label>
+                  <Input
+                    id="logo"
+                    type="file"
+                    accept=".jpg,.jpeg"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file && file.size > 2 * 1024 * 1024) {
+                        toast.error("O arquivo deve ter no máximo 2MB");
+                        e.target.value = "";
+                        return;
+                      }
+                      updateFormData({ logoUrl: file?.name || "" });
+                    }}
+                    required
+                    className="hidden"
+                  />
                 </div>
               </CardContent>
             </Card>
