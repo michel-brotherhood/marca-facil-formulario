@@ -45,7 +45,7 @@ export const TitularPF = ({ formData, updateFormData }: TitularPFProps) => {
     <div className="space-y-4">
       <div>
         <Label className="mb-3 block">
-          O titular possui sociedade registrada com a mesma atividade? *
+          O titular possui sociedade/participação registrada na Receita Federal com a <strong>mesma atividade</strong> da marca? *
         </Label>
         <RadioGroup
           value={formData.possuiSociedade === null ? "" : formData.possuiSociedade.toString()}
@@ -53,24 +53,27 @@ export const TitularPF = ({ formData, updateFormData }: TitularPFProps) => {
             updateFormData({ possuiSociedade: value === "true" })
           }
         >
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
             <RadioGroupItem value="true" id="sociedade-sim" />
             <Label htmlFor="sociedade-sim" className="font-normal cursor-pointer">
-              Sim
+              SIM
             </Label>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
             <RadioGroupItem value="false" id="sociedade-nao" />
             <Label htmlFor="sociedade-nao" className="font-normal cursor-pointer">
-              Não
+              NÃO
             </Label>
           </div>
         </RadioGroup>
+        <p className="mt-2 text-sm font-medium text-orange-600">
+          ⚠️ Se você é sócio de empresa neste mesmo segmento, escolha a opção Pessoa Jurídica.
+        </p>
       </div>
 
       <div>
         <Label className="mb-3 block">
-          O titular da marca é você mesmo ou procurador? *
+          O titular da marca é <strong>você mesmo</strong> (TITULAR) ou <strong>procurador</strong>? *
         </Label>
         <RadioGroup
           value={formData.representante}
@@ -78,16 +81,16 @@ export const TitularPF = ({ formData, updateFormData }: TitularPFProps) => {
             updateFormData({ representante: value })
           }
         >
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
             <RadioGroupItem value="titular" id="rep-titular" />
             <Label htmlFor="rep-titular" className="font-normal cursor-pointer">
-              Eu mesmo (Titular)
+              TITULAR
             </Label>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
             <RadioGroupItem value="procurador" id="rep-procurador" />
             <Label htmlFor="rep-procurador" className="font-normal cursor-pointer">
-              Procurador
+              PROCURADOR
             </Label>
           </div>
         </RadioGroup>
@@ -226,44 +229,74 @@ export const TitularPF = ({ formData, updateFormData }: TitularPFProps) => {
       </div>
 
       <div>
-        <Label htmlFor="rgTitular">Upload do RG do Titular (Opcional)</Label>
-        <Input
-          id="rgTitular"
-          type="file"
-          accept=".pdf,.jpg,.jpeg,.png"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file && file.size > 5 * 1024 * 1024) {
-              toast.error("O arquivo deve ter no máximo 5MB");
-              e.target.value = "";
-              return;
-            }
-            updateFormData({ rgTitularUrl: file?.name || "" });
-          }}
-          className="cursor-pointer"
-        />
+        <Label htmlFor="rgTitular">Upload do RG do Titular (opcional)</Label>
+        <div className="mt-2 flex items-center justify-center border-2 border-dashed border-border rounded-lg p-6 hover:border-primary transition-colors cursor-pointer">
+          <label htmlFor="rgTitular" className="cursor-pointer text-center">
+            <div className="text-4xl mb-2">📄</div>
+            <p className="text-sm text-muted-foreground">Clique para fazer upload do RG</p>
+          </label>
+          <Input
+            id="rgTitular"
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file && file.size > 5 * 1024 * 1024) {
+                toast.error("O arquivo deve ter no máximo 5MB");
+                e.target.value = "";
+                return;
+              }
+              updateFormData({ rgTitularUrl: file?.name || "" });
+            }}
+            className="hidden"
+          />
+        </div>
       </div>
 
       <div>
         <Label htmlFor="diploma">
-          Upload do Diploma ou Prova de Qualificação (Opcional)
+          Upload do Diploma/Prova de Qualificação Profissional (opcional)
         </Label>
-        <Input
-          id="diploma"
-          type="file"
-          accept=".pdf,.jpg,.jpeg,.png"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file && file.size > 5 * 1024 * 1024) {
-              toast.error("O arquivo deve ter no máximo 5MB");
-              e.target.value = "";
-              return;
-            }
-            updateFormData({ diplomaUrl: file?.name || "" });
-          }}
-          className="cursor-pointer"
-        />
+        <div className="mt-2 flex items-center justify-center border-2 border-dashed border-border rounded-lg p-6 hover:border-primary transition-colors cursor-pointer">
+          <label htmlFor="diploma" className="cursor-pointer text-center">
+            <div className="text-4xl mb-2">🎓</div>
+            <p className="text-sm text-muted-foreground">Clique para fazer upload do diploma</p>
+          </label>
+          <Input
+            id="diploma"
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file && file.size > 5 * 1024 * 1024) {
+                toast.error("O arquivo deve ter no máximo 5MB");
+                e.target.value = "";
+                return;
+              }
+              updateFormData({ diplomaUrl: file?.name || "" });
+            }}
+            className="hidden"
+          />
+        </div>
       </div>
+
+      {formData.representante === "procurador" && (
+        <div>
+          <Label htmlFor="procuracaoPF">Upload da Procuração (opcional)</Label>
+          <div className="mt-2 flex items-center justify-center border-2 border-dashed border-border rounded-lg p-6 hover:border-primary transition-colors cursor-pointer">
+            <label htmlFor="procuracaoPF" className="cursor-pointer text-center">
+              <div className="text-4xl mb-2">📋</div>
+              <p className="text-sm text-muted-foreground">Clique para fazer upload da procuração</p>
+            </label>
+            <Input
+              id="procuracaoPF"
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              className="hidden"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
