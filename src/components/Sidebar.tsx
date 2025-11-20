@@ -95,24 +95,24 @@ export const Sidebar = () => {
         </CardContent>
       </Card>
 
-      {/* Precisa de Ajuda? */}
+      {/* Agendar Videoconferência */}
       <Card className="bg-card/95 backdrop-blur-sm shadow-lg border">
         <CardContent className="pt-6">
           <h3 className="text-primary font-semibold mb-4 flex items-center gap-2">
-            <span>❓</span>
+            <span>📅</span>
             <span>Precisa de Ajuda?</span>
           </h3>
-          <p className="text-muted-foreground mb-4 text-center">
-            Nossa equipe está pronta para te ajudar!
+          <p className="text-muted-foreground mb-4 text-sm text-center">
+            Está em dúvidas sobre como registrar a sua marca ou precisa de ajuda para preencher o formulário?
           </p>
-          <a 
-            href="https://wa.me/5521997941008" 
-            target="_blank" 
+          <a
+            href="https://calendly.com/admin-marcafacil/30min"
+            target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full items-center justify-center gap-2 bg-[#25d366] text-white px-5 py-3 rounded-full font-semibold transition-all hover:bg-[#128c7e] hover:-translate-y-0.5"
+            className="inline-flex w-full items-center justify-center gap-2 bg-primary text-primary-foreground px-5 py-3 rounded-lg font-semibold transition-all hover:bg-primary/90 hover:-translate-y-0.5"
           >
-            <span>💬</span>
-            <span>Chamar no WhatsApp</span>
+            <span>☕</span>
+            <span>Agendar Videoconferência Gratuita</span>
           </a>
         </CardContent>
       </Card>
