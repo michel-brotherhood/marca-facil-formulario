@@ -7,9 +7,10 @@ import { TitularPJ } from "./TitularPJ";
 interface Etapa2Props {
   formData: FormState["titular"];
   updateFormData: (data: Partial<FormState["titular"]>) => void;
+  clienteData: FormState["cliente"];
 }
 
-export const Etapa2_DadosTitular = ({ formData, updateFormData }: Etapa2Props) => {
+export const Etapa2_DadosTitular = ({ formData, updateFormData, clienteData }: Etapa2Props) => {
   return (
     <div className="space-y-6 md:space-y-8">
       <div className="space-y-1">
@@ -41,7 +42,7 @@ export const Etapa2_DadosTitular = ({ formData, updateFormData }: Etapa2Props) =
       </div>
 
       {/* Sempre mostrar campos de Pessoa Física */}
-      <TitularPF formData={formData} updateFormData={updateFormData} />
+      <TitularPF formData={formData} updateFormData={updateFormData} clienteData={clienteData} />
       
       {/* Sempre mostrar campos de Pessoa Jurídica */}
       <TitularPJ formData={formData} updateFormData={updateFormData} />

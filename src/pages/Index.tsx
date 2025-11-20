@@ -203,7 +203,7 @@ const Index = () => {
       case 1:
         return <Etapa1_DadosCliente formData={formState.cliente} updateFormData={updateCliente} />;
       case 2:
-        return <Etapa2_DadosTitular formData={formState.titular} updateFormData={updateTitular} />;
+        return <Etapa2_DadosTitular formData={formState.titular} updateFormData={updateTitular} clienteData={formState.cliente} />;
       case 3:
         return <Etapa3_DadosMarca formData={formState.marca} updateFormData={updateMarca} />;
       case 4:
@@ -241,16 +241,17 @@ const Index = () => {
             </Card>
 
             <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 mt-6 md:mt-8">
-              <Button
-                variant="outline"
-                onClick={prevStep}
-                disabled={formState.currentStep === 1}
-                className="w-full sm:w-auto order-2 sm:order-1"
-                size="lg"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Voltar
-              </Button>
+              {formState.currentStep > 1 && (
+                <Button
+                  variant="outline"
+                  onClick={prevStep}
+                  className="w-full sm:w-auto order-2 sm:order-1"
+                  size="lg"
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Voltar
+                </Button>
+              )}
 
               {formState.currentStep < 4 ? (
                 <Button 

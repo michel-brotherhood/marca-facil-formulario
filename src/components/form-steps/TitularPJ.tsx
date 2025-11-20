@@ -18,12 +18,15 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
     const cleanCNPJ = cnpj.replace(/\D/g, "");
     
     if (!validateCNPJ(cnpj)) {
-      toast.error("CNPJ inválido.");
       return;
     }
 
+    toast.loading("Buscando dados do CNPJ...");
+
     try {
       const response = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cleanCNPJ}`);
+      
+      toast.dismiss();
       
       if (!response.ok) {
         toast.error("CNPJ não encontrado.");
@@ -41,8 +44,9 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
         },
       });
 
-      toast.success("Dados do CNPJ carregados!");
+      toast.success("Dados do CNPJ carregados automaticamente!");
     } catch (error) {
+      toast.dismiss();
       toast.error("Erro ao buscar CNPJ. Tente novamente.");
     }
   };

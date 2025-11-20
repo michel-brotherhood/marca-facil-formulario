@@ -5,13 +5,35 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cpfMask, cepMask } from "@/utils/masks";
 import { validateCEP } from "@/utils/validators";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 interface TitularPFProps {
   formData: FormState["titular"];
   updateFormData: (data: Partial<FormState["titular"]>) => void;
+  clienteData: FormState["cliente"];
 }
 
-export const TitularPF = ({ formData, updateFormData }: TitularPFProps) => {
+export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFProps) => {
+  // Autopreencher dados quando escolher "NÃO" em sociedade
+  useEffect(() => {
+    if (formData.possuiSociedade === false && clienteData) {
+      // Só preenche se os campos estiverem vazios
+      if (!formData.nomeCompleto && clienteData.nomeCompleto) {
+        updateFormData({
+          nomeCompleto: clienteData.nomeCompleto,
+          cpf: clienteData.cpf,
+          cep: clienteData.cep,
+          logradouro: clienteData.logradouro,
+          numero: clienteData.numero,
+          complemento: clienteData.complemento,
+          bairro: clienteData.bairro,
+          cidade: clienteData.cidade,
+          uf: clienteData.uf,
+        });
+      }
+    }
+  }, [formData.possuiSociedade, clienteData, formData.nomeCompleto, updateFormData]);
+
   const buscarCEP = async (cep: string) => {
     const cleanCEP = cep.replace(/\D/g, "");
     
