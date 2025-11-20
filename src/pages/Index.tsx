@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FormState, initialFormState } from "@/types/formTypes";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { Sidebar } from "@/components/Sidebar";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Etapa1_DadosCliente } from "@/components/form-steps/Etapa1_DadosCliente";
@@ -48,31 +49,37 @@ const Index = () => {
   const validateStep = (step: number): boolean => {
     switch (step) {
       case 1: {
-        const { nomeCompleto, cpf, telefone, email, cep, logradouro, numero, bairro, cidade, uf } =
-          formState.cliente;
-
-        if (!nomeCompleto || nomeCompleto.length < 3) {
-          toast.error("Nome completo deve ter no mínimo 3 caracteres");
+        if (!formState.cliente.nomeCompleto) {
+          toast.error("Por favor, preencha seu nome completo");
           return false;
         }
-        if (!validateCPF(cpf)) {
-          toast.error("CPF inválido");
+        if (!formState.cliente.cpf || !validateCPF(formState.cliente.cpf)) {
+          toast.error("Por favor, insira um CPF válido");
           return false;
         }
-        if (!telefone || telefone.length < 14) {
-          toast.error("Telefone inválido");
+        if (!formState.cliente.email || !validateEmail(formState.cliente.email)) {
+          toast.error("Por favor, insira um email válido");
           return false;
         }
-        if (!validateEmail(email)) {
-          toast.error("E-mail inválido");
+        if (!formState.cliente.telefone || formState.cliente.telefone.length < 14) {
+          toast.error("Por favor, preencha seu telefone completo");
           return false;
         }
-        if (!validateCEP(cep)) {
-          toast.error("CEP inválido");
+        if (!formState.cliente.cep || !validateCEP(formState.cliente.cep)) {
+          toast.error("Por favor, insira um CEP válido");
           return false;
         }
-        if (!logradouro || !numero || !bairro || !cidade || !uf) {
-          toast.error("Preencha todos os campos de endereço");
+        if (!formState.cliente.logradouro || !formState.cliente.numero || 
+            !formState.cliente.bairro || !formState.cliente.cidade || !formState.cliente.uf) {
+          toast.error("Por favor, preencha todos os campos do endereço");
+          return false;
+        }
+        if (!formState.cliente.preferenciaContato) {
+          toast.error("Por favor, selecione sua preferência de contato");
+          return false;
+        }
+        if (!formState.cliente.rgClienteUrl) {
+          toast.error("Por favor, faça o upload do seu documento RG");
           return false;
         }
         return true;
@@ -128,25 +135,23 @@ const Index = () => {
       }
 
       case 3: {
-        const { nome, utilizacao, atividades, possuiLogo, logoUrl } = formState.marca;
-
-        if (!nome) {
+        if (!formState.marca.nome) {
           toast.error("Nome da marca é obrigatório");
           return false;
         }
-        if (!utilizacao) {
+        if (!formState.marca.utilizacao) {
           toast.error("Informe para que a marca é utilizada");
           return false;
         }
-        if (!atividades || atividades.length < 10) {
+        if (!formState.marca.atividades || formState.marca.atividades.length < 10) {
           toast.error("Descreva as atividades da marca (mínimo 10 caracteres)");
           return false;
         }
-        if (possuiLogo === null) {
+        if (formState.marca.possuiLogo === null) {
           toast.error("Informe se possui logotipo");
           return false;
         }
-        if (possuiLogo && !logoUrl) {
+        if (formState.marca.possuiLogo && !formState.marca.logoUrl) {
           toast.error("Faça o upload do logotipo");
           return false;
         }
@@ -264,6 +269,7 @@ const Index = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

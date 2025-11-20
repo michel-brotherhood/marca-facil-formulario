@@ -14,7 +14,83 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      arquivos: {
+        Row: {
+          created_at: string
+          formulario_id: string | null
+          id: string
+          mime_type: string
+          nome_original: string
+          storage_path: string
+          tamanho: number
+          tipo_arquivo: string
+        }
+        Insert: {
+          created_at?: string
+          formulario_id?: string | null
+          id?: string
+          mime_type: string
+          nome_original: string
+          storage_path: string
+          tamanho: number
+          tipo_arquivo: string
+        }
+        Update: {
+          created_at?: string
+          formulario_id?: string | null
+          id?: string
+          mime_type?: string
+          nome_original?: string
+          storage_path?: string
+          tamanho?: number
+          tipo_arquivo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "arquivos_formulario_id_fkey"
+            columns: ["formulario_id"]
+            isOneToOne: false
+            referencedRelation: "formularios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      formularios: {
+        Row: {
+          created_at: string
+          dados_cliente: Json | null
+          dados_marca: Json | null
+          dados_titular: Json | null
+          etapa_atual: number
+          id: string
+          status: string | null
+          termos: Json | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          dados_cliente?: Json | null
+          dados_marca?: Json | null
+          dados_titular?: Json | null
+          etapa_atual?: number
+          id?: string
+          status?: string | null
+          termos?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          dados_cliente?: Json | null
+          dados_marca?: Json | null
+          dados_titular?: Json | null
+          etapa_atual?: number
+          id?: string
+          status?: string | null
+          termos?: Json | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

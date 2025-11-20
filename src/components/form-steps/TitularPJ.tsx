@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cnpjMask } from "@/utils/masks";
 import { validateCNPJ } from "@/utils/validators";
 import { toast } from "sonner";
+import { FileUpload } from "@/components/FileUpload";
 
 interface TitularPJProps {
   formData: FormState["titular"];

@@ -3,8 +3,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cpfMask, cepMask, phoneMask } from "@/utils/masks";
-import { validateCPF, validateEmail, validateCEP } from "@/utils/validators";
+import { validateCEP } from "@/utils/validators";
 import { toast } from "sonner";
+import { FileUpload } from "@/components/FileUpload";
 
 interface Etapa1Props {
   formData: FormState["cliente"];
