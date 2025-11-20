@@ -8,13 +8,13 @@ interface HeaderProps {
 export const Header = ({ currentStep, totalSteps }: HeaderProps) => {
   return (
     <header className="bg-[#7c3aed] border-b border-[#6d28d9] shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center flex-shrink-0">
             <img 
               src={logoSvg} 
               alt="MarcaFácil.legal" 
-              className="h-10 sm:h-12 w-auto" 
+              className="h-12 sm:h-14 md:h-16 w-auto" 
             />
           </div>
           
@@ -23,7 +23,7 @@ export const Header = ({ currentStep, totalSteps }: HeaderProps) => {
               <div
                 key={step}
                 className={`
-                  w-8 h-8 md:w-10 md:h-10 
+                  w-9 h-9 md:w-11 md:h-11 
                   rounded-full 
                   flex items-center justify-center 
                   text-sm md:text-base
@@ -45,7 +45,7 @@ export const Header = ({ currentStep, totalSteps }: HeaderProps) => {
           
           {/* Mobile step indicator */}
           <div className="flex sm:hidden items-center gap-2 text-white">
-            <span className="text-sm font-medium">
+            <span className="text-sm font-medium whitespace-nowrap">
               Etapa {currentStep}/{totalSteps}
             </span>
           </div>
