@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cnpjMask } from "@/utils/masks";
 import { validateCNPJ } from "@/utils/validators";
 import { toast } from "sonner";
-import { FileUpload } from "@/components/FileUpload";
+import { FileCheck } from "lucide-react";
 
 interface TitularPJProps {
   formData: FormState["titular"];
@@ -119,20 +119,20 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
                 </Label>
               </div>
             </RadioGroup>
-            <Card className="mt-3 bg-blue-50 border-blue-200">
+            <Card className="mt-3 bg-primary/5 border-l-4 border-primary">
               <CardContent className="pt-4 pb-4">
-                <p className="text-sm font-medium">📞 Precisa de ajuda com os dados?</p>
+                <p className="text-sm font-medium">❓ Precisa de Ajuda?</p>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Entre em contato conosco via{" "}
-                  <a href="https://wa.me/5521997941008" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
-                    WhatsApp
-                  </a>
-                  {" "}ou{" "}
-                  <a href="https://calendly.com/admin-marcafacil/30min" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
-                    agende uma videoconferência gratuita
-                  </a>
-                  .
+                  Precisa de ajuda com os dados ou tem dúvidas sobre o processo?
                 </p>
+                <a
+                  href="https://calendly.com/admin-marcafacil/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-3 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                >
+                  ☕ Agendar Videoconferência Gratuita (30 min)
+                </a>
               </CardContent>
             </Card>
           </div>
@@ -174,28 +174,37 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
           {formData.representante === "procurador" && (
             <div>
               <Label htmlFor="procuracaoPJ">Upload da Procuração (opcional)</Label>
-              <Input
-                id="procuracaoPJ"
-                type="file"
-                accept=".pdf,.jpg,.jpeg,.png"
-                onChange={async (e) => {
-                  const file = e.target.files?.[0];
-                  if (!file) return;
-                  
-                  if (file.size > 5 * 1024 * 1024) {
-                    toast.error("O arquivo deve ter no máximo 5MB");
-                    e.target.value = "";
-                    return;
-                  }
-                  
-                  toast.success(`Arquivo ${file.name} selecionado`);
-                  updateFormData({ procuracaoUrl: file.name });
-                }}
-                className="mt-2"
-              />
+              <label 
+                htmlFor="procuracaoPJ" 
+                className="mt-2 flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-muted-foreground/25 rounded-lg cursor-pointer bg-muted/10 hover:bg-muted/20 transition-colors"
+              >
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <FileCheck className="w-10 h-10 mb-2 text-muted-foreground" />
+                  <p className="text-sm text-muted-foreground">Clique para fazer upload da procuração</p>
+                </div>
+                <Input
+                  id="procuracaoPJ"
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    
+                    if (file.size > 5 * 1024 * 1024) {
+                      toast.error("O arquivo deve ter no máximo 5MB");
+                      e.target.value = "";
+                      return;
+                    }
+                    
+                    toast.success(`Arquivo ${file.name} selecionado`);
+                    updateFormData({ procuracaoUrl: file.name });
+                  }}
+                  className="hidden"
+                />
+              </label>
               {formData.procuracaoUrl && (
-                <div className="flex items-center justify-between mt-1 p-2 bg-muted/50 rounded">
-                  <p className="text-sm text-green-600">✓ {formData.procuracaoUrl}</p>
+                <div className="flex items-center justify-between mt-2 p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <p className="text-sm text-green-700 font-medium">✓ {formData.procuracaoUrl}</p>
                   <button
                     type="button"
                     onClick={() => {
@@ -204,7 +213,7 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
                       if (input) input.value = "";
                       toast.success("Arquivo removido");
                     }}
-                    className="text-red-600 hover:text-red-700 font-bold"
+                    className="text-red-600 hover:text-red-700 font-bold text-lg"
                   >
                     ✕
                   </button>

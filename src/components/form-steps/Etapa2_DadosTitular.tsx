@@ -41,11 +41,15 @@ export const Etapa2_DadosTitular = ({ formData, updateFormData, clienteData }: E
         </RadioGroup>
       </div>
 
-      {/* Sempre mostrar campos de Pessoa Física */}
-      <TitularPF formData={formData} updateFormData={updateFormData} clienteData={clienteData} />
+      {/* Mostrar campos de Pessoa Física apenas se selecionado */}
+      {formData.tipo === "pf" && (
+        <TitularPF formData={formData} updateFormData={updateFormData} clienteData={clienteData} />
+      )}
       
-      {/* Sempre mostrar campos de Pessoa Jurídica */}
-      <TitularPJ formData={formData} updateFormData={updateFormData} />
+      {/* Mostrar campos de Pessoa Jurídica apenas se selecionado */}
+      {formData.tipo === "pj" && (
+        <TitularPJ formData={formData} updateFormData={updateFormData} />
+      )}
     </div>
   );
 };
