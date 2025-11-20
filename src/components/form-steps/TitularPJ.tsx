@@ -190,7 +190,21 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
                 className="mt-2"
               />
               {formData.procuracaoUrl && (
-                <p className="text-sm text-success mt-1">✓ {formData.procuracaoUrl}</p>
+                <div className="flex items-center justify-between mt-1 p-2 bg-muted/50 rounded">
+                  <p className="text-sm text-green-600">✓ {formData.procuracaoUrl}</p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      updateFormData({ procuracaoUrl: "" });
+                      const input = document.getElementById("procuracaoPJ") as HTMLInputElement;
+                      if (input) input.value = "";
+                      toast.success("Arquivo removido");
+                    }}
+                    className="text-red-600 hover:text-red-700 font-bold"
+                  >
+                    ✕
+                  </button>
+                </div>
               )}
             </div>
           )}

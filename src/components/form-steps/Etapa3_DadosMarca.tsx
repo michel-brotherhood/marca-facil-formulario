@@ -139,7 +139,21 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
                   required
                 />
                 {formData.logoUrl && (
-                  <p className="text-sm text-success mt-1">✓ {formData.logoUrl}</p>
+                  <div className="flex items-center justify-between mt-1 p-2 bg-muted/50 rounded">
+                    <p className="text-sm text-green-600">✓ {formData.logoUrl}</p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        updateFormData({ logoUrl: "" });
+                        const input = document.getElementById("logo") as HTMLInputElement;
+                        if (input) input.value = "";
+                        toast.success("Arquivo removido");
+                      }}
+                      className="text-red-600 hover:text-red-700 font-bold"
+                    >
+                      ✕
+                    </button>
+                  </div>
                 )}
               </CardContent>
             </Card>

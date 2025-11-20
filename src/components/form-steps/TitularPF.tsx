@@ -250,7 +250,21 @@ export const TitularPF = ({ formData, updateFormData }: TitularPFProps) => {
           className="mt-2"
         />
         {formData.rgTitularUrl && (
-          <p className="text-sm text-success mt-1">✓ {formData.rgTitularUrl}</p>
+          <div className="flex items-center justify-between mt-1 p-2 bg-muted/50 rounded">
+            <p className="text-sm text-green-600">✓ {formData.rgTitularUrl}</p>
+            <button
+              type="button"
+              onClick={() => {
+                updateFormData({ rgTitularUrl: "" });
+                const input = document.getElementById("rgTitular") as HTMLInputElement;
+                if (input) input.value = "";
+                toast.success("Arquivo removido");
+              }}
+              className="text-red-600 hover:text-red-700 font-bold"
+            >
+              ✕
+            </button>
+          </div>
         )}
       </div>
 
@@ -276,7 +290,21 @@ export const TitularPF = ({ formData, updateFormData }: TitularPFProps) => {
           className="mt-2"
         />
         {formData.diplomaUrl && (
-          <p className="text-sm text-success mt-1">✓ {formData.diplomaUrl}</p>
+          <div className="flex items-center justify-between mt-1 p-2 bg-muted/50 rounded">
+            <p className="text-sm text-green-600">✓ {formData.diplomaUrl}</p>
+            <button
+              type="button"
+              onClick={() => {
+                updateFormData({ diplomaUrl: "" });
+                const input = document.getElementById("diploma") as HTMLInputElement;
+                if (input) input.value = "";
+                toast.success("Arquivo removido");
+              }}
+              className="text-red-600 hover:text-red-700 font-bold"
+            >
+              ✕
+            </button>
+          </div>
         )}
       </div>
 
@@ -303,7 +331,21 @@ export const TitularPF = ({ formData, updateFormData }: TitularPFProps) => {
             className="mt-2"
           />
           {formData.procuracaoUrl && (
-            <p className="text-sm text-success mt-1">✓ {formData.procuracaoUrl}</p>
+            <div className="flex items-center justify-between mt-1 p-2 bg-muted/50 rounded">
+              <p className="text-sm text-green-600">✓ {formData.procuracaoUrl}</p>
+              <button
+                type="button"
+                onClick={() => {
+                  updateFormData({ procuracaoUrl: "" });
+                  const input = document.getElementById("procuracaoPF") as HTMLInputElement;
+                  if (input) input.value = "";
+                  toast.success("Arquivo removido");
+                }}
+                className="text-red-600 hover:text-red-700 font-bold"
+              >
+                ✕
+              </button>
+            </div>
           )}
         </div>
       )}
