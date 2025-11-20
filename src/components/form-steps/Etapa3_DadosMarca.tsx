@@ -71,7 +71,7 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
             placeholder="Ex: Venda de roupas femininas, consultoria em marketing digital, fabricação de produtos alimentícios..."
             rows={4}
             required
-            className="mt-2"
+            className="mt-2 bg-muted/30"
           />
         </div>
 
@@ -97,28 +97,37 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
         </div>
 
         {formData.possuiLogo === true && (
-          <div>
-            <Card className="mt-4 bg-muted/50">
-              <CardContent className="pt-6">
-                <h4 className="font-semibold mb-3">
-                  📋 Especificações Técnicas
-                </h4>
-                <ul className="text-sm space-y-1 text-muted-foreground mb-4">
-                  <li>• <strong>Formato válido:</strong> JPG</li>
-                  <li>• <strong>Tamanho mínimo:</strong> 945 × 945 px (8 × 8 cm)</li>
-                  <li>• <strong>Resolução mínima:</strong> 300 dpi</li>
-                  <li>• <strong>Tamanho máximo:</strong> 2 MB</li>
-                  <li>• <strong>Padrão de cores:</strong> RGB</li>
-                </ul>
-                
-                <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-md mb-4">
-                  <p className="text-sm font-semibold mb-1">💡 DICA DE OURO</p>
-                  <p className="text-sm text-muted-foreground">
-                    A menos que uma cor ou combinação de cores específica seja elemento essencial da sua marca, recomendamos apresentar o logotipo em <strong>preto e branco</strong>.
-                  </p>
-                </div>
+          <div className="mt-4">
+            <p className="font-semibold mb-3 text-sm">Upload do Logotipo</p>
+            
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-4">
+              <h4 className="font-semibold mb-3 text-orange-600 flex items-center gap-2">
+                <span>📋</span> Especificações Técnicas
+              </h4>
+              <ul className="text-sm space-y-1">
+                <li><span className="font-semibold text-orange-600">Formato válido:</span> JPG</li>
+                <li><span className="font-semibold text-orange-600">Tamanho mínimo:</span> 945 × 945 px (8 × 8 cm)</li>
+                <li><span className="font-semibold text-orange-600">Resolução mínima:</span> 300 dpi</li>
+                <li><span className="font-semibold text-orange-600">Tamanho máximo:</span> 2 MB</li>
+                <li><span className="font-semibold text-orange-600">Padrão de cores:</span> RGB</li>
+              </ul>
+            </div>
+            
+            <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4">
+              <p className="font-semibold mb-2 flex items-center gap-2">
+                <span>💡</span> DICA DE OURO
+              </p>
+              <p className="text-sm">
+                A menos que uma cor ou combinação de cores específica seja elemento essencial da sua marca, recomendamos apresentar o logotipo em <strong>preto e branco</strong>.
+              </p>
+            </div>
 
-                <Label htmlFor="logo">Upload do Logotipo</Label>
+            <div className="border-2 border-dashed border-border rounded-lg p-8 text-center bg-background">
+              <div className="flex flex-col items-center gap-3">
+                <div className="text-4xl">🎨</div>
+                <Label htmlFor="logo" className="cursor-pointer text-muted-foreground hover:text-foreground transition-colors">
+                  Clique para fazer upload do logotipo
+                </Label>
                 <Input
                   id="logo"
                   type="file"
@@ -136,28 +145,29 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
                     toast.success(`Arquivo ${file.name} selecionado`);
                     updateFormData({ logoUrl: file.name });
                   }}
-                  className="mt-2"
+                  className="hidden"
                   required
                 />
-                {formData.logoUrl && (
-                  <div className="flex items-center justify-between mt-1 p-2 bg-muted/50 rounded">
-                    <p className="text-sm text-green-600">✓ {formData.logoUrl}</p>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        updateFormData({ logoUrl: "" });
-                        const input = document.getElementById("logo") as HTMLInputElement;
-                        if (input) input.value = "";
-                        toast.success("Arquivo removido");
-                      }}
-                      className="text-red-600 hover:text-red-700 font-bold"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
+            
+            {formData.logoUrl && (
+              <div className="flex items-center justify-between mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <p className="text-sm text-green-700 font-medium">✓ {formData.logoUrl}</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    updateFormData({ logoUrl: "" });
+                    const input = document.getElementById("logo") as HTMLInputElement;
+                    if (input) input.value = "";
+                    toast.success("Arquivo removido");
+                  }}
+                  className="text-red-600 hover:text-red-700 font-bold text-lg"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
