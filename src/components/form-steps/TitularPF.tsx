@@ -2,10 +2,12 @@ import { FormState } from "@/types/formTypes";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Card, CardContent } from "@/components/ui/card";
 import { cpfMask, cepMask } from "@/utils/masks";
 import { validateCEP } from "@/utils/validators";
 import { toast } from "sonner";
 import { useEffect } from "react";
+import { FileText, GraduationCap, FileCheck } from "lucide-react";
 
 interface TitularPFProps {
   formData: FormState["titular"];
@@ -14,9 +16,9 @@ interface TitularPFProps {
 }
 
 export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFProps) => {
-  // Autopreencher dados quando escolher "NÃO" em sociedade
+  // Autopreencher dados quando escolher "NÃO" em sociedade E representante for "titular"
   useEffect(() => {
-    if (formData.possuiSociedade === false && clienteData) {
+    if (formData.possuiSociedade === false && formData.representante === "titular" && clienteData) {
       // Só preenche se os campos estiverem vazios
       if (!formData.nomeCompleto && clienteData.nomeCompleto) {
         updateFormData({
@@ -32,7 +34,26 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
         });
       }
     }
-  }, [formData.possuiSociedade, clienteData, formData.nomeCompleto, updateFormData]);
+  }, [formData.possuiSociedade, formData.representante, clienteData, formData.nomeCompleto, updateFormData]);
+
+  // Limpar dados quando escolher "procurador"
+  useEffect(() => {
+    if (formData.representante === "procurador") {
+      updateFormData({
+        nomeCompleto: "",
+        cpf: "",
+        cep: "",
+        logradouro: "",
+        numero: "",
+        complemento: "",
+        bairro: "",
+        cidade: "",
+        uf: "",
+        dataNascimento: "",
+        profissao: "",
+      });
+    }
+  }, [formData.representante, updateFormData]);
 
   const buscarCEP = async (cep: string) => {
     const cleanCEP = cep.replace(/\D/g, "");
@@ -98,22 +119,22 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
       {/* Mostrar campos apenas se possuiSociedade for false */}
       {formData.possuiSociedade === false && (
         <>
-          <div className="bg-primary/5 border-l-4 border-primary p-4 rounded">
-            <p className="text-sm font-medium">
-              📅 Está em dúvidas sobre como registrar a sua marca?
-            </p>
-            <p className="text-sm text-muted-foreground mt-1">
-              Precisa de ajuda para preencher o nosso formulário?
-            </p>
-            <a
-              href="https://calendly.com/admin-marcafacil/30min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mt-3 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
-            >
-              ☕ Agendar Videoconferência Gratuita (30 min)
-            </a>
-          </div>
+          <Card className="bg-primary/5 border-l-4 border-primary">
+            <CardContent className="pt-4 pb-4">
+              <p className="text-sm font-medium">❓ Precisa de Ajuda?</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Está em dúvidas sobre como registrar a sua marca ou precisa de ajuda para preencher o formulário?
+              </p>
+              <a
+                href="https://calendly.com/admin-marcafacil/30min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-3 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+              >
+                ☕ Agendar Videoconferência Gratuita (30 min)
+              </a>
+            </CardContent>
+          </Card>
 
       <div>
         <Label className="mb-3 block">
@@ -274,89 +295,16 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
 
       <div>
         <Label htmlFor="rgTitular">Upload do RG do Titular (opcional)</Label>
-        <Input
-          id="rgTitular"
-          type="file"
-          accept=".pdf,.jpg,.jpeg,.png"
-          onChange={async (e) => {
-            const file = e.target.files?.[0];
-            if (!file) return;
-            
-            if (file.size > 5 * 1024 * 1024) {
-              toast.error("O arquivo deve ter no máximo 5MB");
-              e.target.value = "";
-              return;
-            }
-            
-            toast.success(`Arquivo ${file.name} selecionado`);
-            updateFormData({ rgTitularUrl: file.name });
-          }}
-          className="mt-2"
-        />
-        {formData.rgTitularUrl && (
-          <div className="flex items-center justify-between mt-1 p-2 bg-muted/50 rounded">
-            <p className="text-sm text-green-600">✓ {formData.rgTitularUrl}</p>
-            <button
-              type="button"
-              onClick={() => {
-                updateFormData({ rgTitularUrl: "" });
-                const input = document.getElementById("rgTitular") as HTMLInputElement;
-                if (input) input.value = "";
-                toast.success("Arquivo removido");
-              }}
-              className="text-red-600 hover:text-red-700 font-bold"
-            >
-              ✕
-            </button>
+        <label 
+          htmlFor="rgTitular" 
+          className="mt-2 flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-muted-foreground/25 rounded-lg cursor-pointer bg-muted/10 hover:bg-muted/20 transition-colors"
+        >
+          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+            <FileText className="w-10 h-10 mb-2 text-muted-foreground" />
+            <p className="text-sm text-muted-foreground">Clique para fazer upload do RG</p>
           </div>
-        )}
-      </div>
-
-      <div>
-        <Label htmlFor="diploma">Upload do Diploma/Prova de Qualificação Profissional (opcional)</Label>
-        <Input
-          id="diploma"
-          type="file"
-          accept=".pdf,.jpg,.jpeg,.png"
-          onChange={async (e) => {
-            const file = e.target.files?.[0];
-            if (!file) return;
-            
-            if (file.size > 5 * 1024 * 1024) {
-              toast.error("O arquivo deve ter no máximo 5MB");
-              e.target.value = "";
-              return;
-            }
-            
-            toast.success(`Arquivo ${file.name} selecionado`);
-            updateFormData({ diplomaUrl: file.name });
-          }}
-          className="mt-2"
-        />
-        {formData.diplomaUrl && (
-          <div className="flex items-center justify-between mt-1 p-2 bg-muted/50 rounded">
-            <p className="text-sm text-green-600">✓ {formData.diplomaUrl}</p>
-            <button
-              type="button"
-              onClick={() => {
-                updateFormData({ diplomaUrl: "" });
-                const input = document.getElementById("diploma") as HTMLInputElement;
-                if (input) input.value = "";
-                toast.success("Arquivo removido");
-              }}
-              className="text-red-600 hover:text-red-700 font-bold"
-            >
-              ✕
-            </button>
-          </div>
-        )}
-      </div>
-
-      {formData.representante === "procurador" && (
-        <div>
-          <Label htmlFor="procuracaoPF">Upload da Procuração (opcional)</Label>
           <Input
-            id="procuracaoPF"
+            id="rgTitular"
             type="file"
             accept=".pdf,.jpg,.jpeg,.png"
             onChange={async (e) => {
@@ -370,13 +318,113 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
               }
               
               toast.success(`Arquivo ${file.name} selecionado`);
-              updateFormData({ procuracaoUrl: file.name });
+              updateFormData({ rgTitularUrl: file.name });
             }}
-            className="mt-2"
+            className="hidden"
           />
+        </label>
+        {formData.rgTitularUrl && (
+          <div className="flex items-center justify-between mt-2 p-3 bg-green-50 border border-green-200 rounded-lg">
+            <p className="text-sm text-green-700 font-medium">✓ {formData.rgTitularUrl}</p>
+            <button
+              type="button"
+              onClick={() => {
+                updateFormData({ rgTitularUrl: "" });
+                const input = document.getElementById("rgTitular") as HTMLInputElement;
+                if (input) input.value = "";
+                toast.success("Arquivo removido");
+              }}
+              className="text-red-600 hover:text-red-700 font-bold text-lg"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div>
+        <Label htmlFor="diploma">Upload do Diploma/Prova de Qualificação Profissional (opcional)</Label>
+        <label 
+          htmlFor="diploma" 
+          className="mt-2 flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-muted-foreground/25 rounded-lg cursor-pointer bg-muted/10 hover:bg-muted/20 transition-colors"
+        >
+          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+            <GraduationCap className="w-10 h-10 mb-2 text-muted-foreground" />
+            <p className="text-sm text-muted-foreground">Clique para fazer upload do diploma</p>
+          </div>
+          <Input
+            id="diploma"
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            onChange={async (e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              
+              if (file.size > 5 * 1024 * 1024) {
+                toast.error("O arquivo deve ter no máximo 5MB");
+                e.target.value = "";
+                return;
+              }
+              
+              toast.success(`Arquivo ${file.name} selecionado`);
+              updateFormData({ diplomaUrl: file.name });
+            }}
+            className="hidden"
+          />
+        </label>
+        {formData.diplomaUrl && (
+          <div className="flex items-center justify-between mt-2 p-3 bg-green-50 border border-green-200 rounded-lg">
+            <p className="text-sm text-green-700 font-medium">✓ {formData.diplomaUrl}</p>
+            <button
+              type="button"
+              onClick={() => {
+                updateFormData({ diplomaUrl: "" });
+                const input = document.getElementById("diploma") as HTMLInputElement;
+                if (input) input.value = "";
+                toast.success("Arquivo removido");
+              }}
+              className="text-red-600 hover:text-red-700 font-bold text-lg"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+      </div>
+
+      {formData.representante === "procurador" && (
+        <div>
+          <Label htmlFor="procuracaoPF">Upload da Procuração (opcional)</Label>
+          <label 
+            htmlFor="procuracaoPF" 
+            className="mt-2 flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-muted-foreground/25 rounded-lg cursor-pointer bg-muted/10 hover:bg-muted/20 transition-colors"
+          >
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <FileCheck className="w-10 h-10 mb-2 text-muted-foreground" />
+              <p className="text-sm text-muted-foreground">Clique para fazer upload da procuração</p>
+            </div>
+            <Input
+              id="procuracaoPF"
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              onChange={async (e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                
+                if (file.size > 5 * 1024 * 1024) {
+                  toast.error("O arquivo deve ter no máximo 5MB");
+                  e.target.value = "";
+                  return;
+                }
+                
+                toast.success(`Arquivo ${file.name} selecionado`);
+                updateFormData({ procuracaoUrl: file.name });
+              }}
+              className="hidden"
+            />
+          </label>
           {formData.procuracaoUrl && (
-            <div className="flex items-center justify-between mt-1 p-2 bg-muted/50 rounded">
-              <p className="text-sm text-green-600">✓ {formData.procuracaoUrl}</p>
+            <div className="flex items-center justify-between mt-2 p-3 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-sm text-green-700 font-medium">✓ {formData.procuracaoUrl}</p>
               <button
                 type="button"
                 onClick={() => {
@@ -385,7 +433,7 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
                   if (input) input.value = "";
                   toast.success("Arquivo removido");
                 }}
-                className="text-red-600 hover:text-red-700 font-bold"
+                className="text-red-600 hover:text-red-700 font-bold text-lg"
               >
                 ✕
               </button>
