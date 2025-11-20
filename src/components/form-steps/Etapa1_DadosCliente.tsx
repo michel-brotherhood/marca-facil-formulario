@@ -417,7 +417,10 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               }
               
               toast.success(`Arquivo ${file.name} selecionado`);
-              updateFormData({ rgClienteUrl: file.name });
+              updateFormData({ 
+                rgClienteUrl: file.name,
+                rgClienteFile: file 
+              });
             }}
             className="mt-2"
           />

@@ -57,6 +57,11 @@ interface FormData {
     possuiLogo: boolean | null;
     logoUrl: string;
   };
+  arquivos?: Array<{
+    url: string;
+    path: string;
+    name: string;
+  }>;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -113,7 +118,6 @@ const handler = async (req: Request): Promise<Response> => {
               <div class="field"><span class="label">Telefone:</span><span class="value">${formData.cliente.telefone}</span></div>
               <div class="field"><span class="label">Endereço:</span><span class="value">${formData.cliente.logradouro}, ${formData.cliente.numero}${formData.cliente.complemento ? ' - ' + formData.cliente.complemento : ''} - ${formData.cliente.bairro}, ${formData.cliente.cidade}/${formData.cliente.uf} - CEP: ${formData.cliente.cep}</span></div>
               <div class="field"><span class="label">Preferência de Contato:</span><span class="value">${formData.cliente.preferenciaContato === 'whatsapp' ? 'WhatsApp' : 'E-mail'}</span></div>
-              ${formData.cliente.rgClienteUrl ? `<div class="field"><span class="label">RG:</span><span class="value">✓ Arquivo anexado: ${formData.cliente.rgClienteUrl}</span></div>` : ''}
             </div>
 
             <div class="section">
@@ -150,8 +154,21 @@ const handler = async (req: Request): Promise<Response> => {
               }</span></div>
               <div class="field"><span class="label">Atividades:</span><span class="value">${formData.marca.atividades}</span></div>
               <div class="field"><span class="label">Possui Logo:</span><span class="value">${formData.marca.possuiLogo ? 'Sim' : 'Não'}</span></div>
-              ${formData.marca.logoUrl ? `<div class="field"><span class="label">Logo:</span><span class="value">✓ Arquivo anexado: ${formData.marca.logoUrl}</span></div>` : ''}
             </div>
+
+            ${formData.arquivos && formData.arquivos.length > 0 ? `
+              <div class="section">
+                <h2>📎 Arquivos Anexados</h2>
+                ${formData.arquivos.map(arquivo => `
+                  <div class="field">
+                    <span class="label">${arquivo.name}:</span>
+                    <a href="${arquivo.url}" target="_blank" class="value" style="color: #667eea; text-decoration: underline;">
+                      Clique para visualizar/baixar
+                    </a>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
 
             <div class="footer">
               <p>Este é um email automático gerado pelo sistema de registro de marcas.</p>

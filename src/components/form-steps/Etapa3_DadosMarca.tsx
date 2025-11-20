@@ -218,7 +218,10 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
                     }
                     
                     toast.success(`Arquivo ${file.name} selecionado`);
-                    updateFormData({ logoUrl: file.name });
+                    updateFormData({ 
+                      logoUrl: file.name,
+                      logoFile: file
+                    });
                   }}
                   className="hidden"
                   required

@@ -306,7 +306,10 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
                     }
                     
                     toast.success(`Arquivo ${file.name} selecionado`);
-                    updateFormData({ procuracaoUrl: file.name });
+                    updateFormData({ 
+                      procuracaoUrl: file.name,
+                      procuracaoFile: file
+                    });
                   }}
                   className="hidden"
                 />

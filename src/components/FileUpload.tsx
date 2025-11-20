@@ -56,16 +56,16 @@ export const FileUpload = ({
     try {
       const result = await uploadFile(file, tipoArquivo);
       
-      if (result.success) {
+      if (result) {
         toast({
           title: "Upload realizado com sucesso!",
-          description: `Arquivo ${result.fileName} enviado.`,
+          description: `Arquivo ${result.name} enviado.`,
         });
         onUploadSuccess(result);
       } else {
         toast({
           title: "Erro no upload",
-          description: result.error || "Não foi possível enviar o arquivo",
+          description: "Não foi possível enviar o arquivo",
           variant: "destructive",
         });
         setPreview(null);

@@ -14,6 +14,7 @@ export interface FormState {
     uf: string;
     preferenciaContato: "whatsapp" | "email";
     rgClienteUrl: string;
+    rgClienteFile?: File; // Arquivo real
   };
   titular: {
     tipo: "pf" | "pj";
@@ -31,8 +32,11 @@ export interface FormState {
     uf: string;
     profissao: string;
     rgTitularUrl: string;
+    rgTitularFile?: File; // Arquivo real
     diplomaUrl: string;
+    diplomaFile?: File; // Arquivo real
     procuracaoUrl: string;
+    procuracaoFile?: File; // Arquivo real
     cnpj: string;
     dadosCnpjCorretos: boolean | null;
     dadosCnpj?: {
@@ -57,6 +61,7 @@ export interface FormState {
     atividades: string;
     possuiLogo: boolean | null;
     logoUrl: string;
+    logoFile?: File; // Arquivo real
   };
   termos: {
     aceitaPolitica: boolean;
