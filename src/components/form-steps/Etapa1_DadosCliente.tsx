@@ -56,7 +56,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
             id="nomeCompleto"
             value={formData.nomeCompleto}
             onChange={(e) => updateFormData({ nomeCompleto: e.target.value })}
-            placeholder="Digite seu nome completo"
+            placeholder=""
             required
           />
         </div>
@@ -68,7 +68,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="cpf"
               value={formData.cpf}
               onChange={(e) => updateFormData({ cpf: cpfMask(e.target.value) })}
-              placeholder="000.000.000-00"
+              placeholder=""
               maxLength={14}
               required
             />
@@ -80,7 +80,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="telefone"
               value={formData.telefone}
               onChange={(e) => updateFormData({ telefone: phoneMask(e.target.value) })}
-              placeholder="(00) 00000-0000"
+              placeholder=""
               maxLength={15}
               required
             />
@@ -94,7 +94,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
             type="email"
             value={formData.email}
             onChange={(e) => updateFormData({ email: e.target.value })}
-            placeholder="seu@email.com"
+            placeholder=""
             required
           />
         </div>
@@ -107,7 +107,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               value={formData.cep}
               onChange={(e) => updateFormData({ cep: cepMask(e.target.value) })}
               onBlur={(e) => buscarCEP(e.target.value)}
-              placeholder="00000-000"
+              placeholder=""
               maxLength={9}
               required
             />
@@ -119,7 +119,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="logradouro"
               value={formData.logradouro}
               onChange={(e) => updateFormData({ logradouro: e.target.value })}
-              placeholder="Rua, Avenida..."
+              placeholder=""
               required
             />
           </div>
@@ -132,7 +132,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="numero"
               value={formData.numero}
               onChange={(e) => updateFormData({ numero: e.target.value })}
-              placeholder="123"
+              placeholder=""
               required
             />
           </div>
@@ -143,7 +143,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="complemento"
               value={formData.complemento}
               onChange={(e) => updateFormData({ complemento: e.target.value })}
-              placeholder="Apto, Sala..."
+              placeholder=""
             />
           </div>
 
@@ -153,7 +153,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="bairro"
               value={formData.bairro}
               onChange={(e) => updateFormData({ bairro: e.target.value })}
-              placeholder="Nome do bairro"
+              placeholder=""
               required
             />
           </div>
@@ -166,7 +166,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="cidade"
               value={formData.cidade}
               onChange={(e) => updateFormData({ cidade: e.target.value })}
-              placeholder="Nome da cidade"
+              placeholder=""
               required
             />
           </div>
@@ -177,7 +177,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="uf"
               value={formData.uf}
               onChange={(e) => updateFormData({ uf: e.target.value.toUpperCase() })}
-              placeholder="SP"
+              placeholder=""
               maxLength={2}
               required
             />
