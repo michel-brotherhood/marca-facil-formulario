@@ -40,6 +40,15 @@ export interface FormState {
       nomeFantasia: string;
       cnae: string;
       situacao: string;
+      porte: string;
+      naturezaJuridica: string;
+      logradouro: string;
+      numero: string;
+      complemento: string;
+      bairro: string;
+      municipio: string;
+      uf: string;
+      cep: string;
     };
   };
   marca: {
