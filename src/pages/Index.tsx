@@ -219,7 +219,6 @@ const Index = () => {
     return (
       <div className="min-h-screen bg-background">
         <Header currentStep={5} totalSteps={5} />
-        <div className="h-16 sm:h-20" />
         <div className="py-8 md:py-12 px-4 sm:px-6 lg:px-8">
           <Etapa5_Obrigado />
         </div>
@@ -231,8 +230,6 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header currentStep={formState.currentStep} totalSteps={5} />
-      {/* Spacer for fixed header */}
-      <div className="h-16 sm:h-20" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
