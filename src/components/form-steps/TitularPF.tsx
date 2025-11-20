@@ -2,8 +2,9 @@ import { FormState } from "@/types/formTypes";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { cpfMask, cepMask } from "@/utils/masks";
+import { cpfMask, cnpjMask, cepMask } from "@/utils/masks";
 import { validateCEP } from "@/utils/validators";
+import { FileUpload } from "@/components/FileUpload";
 import { toast } from "sonner";
 
 interface TitularPFProps {
