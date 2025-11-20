@@ -3,10 +3,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cpfMask, cepMask, phoneMask } from "@/utils/masks";
-import { validateCEP, validateCPF } from "@/utils/validators";
+import { validateCEP, validateCPF, validateEmail } from "@/utils/validators";
 import { toast } from "sonner";
 import { FileUpload } from "@/components/FileUpload";
-import { CheckCircle2, XCircle } from "lucide-react";
+import { CheckCircle2, XCircle, AlertCircle } from "lucide-react";
 import { useState } from "react";
 
 interface Etapa1Props {
@@ -16,6 +16,10 @@ interface Etapa1Props {
 
 export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) => {
   const [cpfValido, setCpfValido] = useState<boolean | null>(null);
+  const [emailValido, setEmailValido] = useState<boolean | null>(null);
+  const [telefoneValido, setTelefoneValido] = useState<boolean | null>(null);
+  const [cepValido, setCepValido] = useState<boolean | null>(null);
+  const [nomeValido, setNomeValido] = useState<boolean | null>(null);
   
   const handleCPFValidation = (cpf: string) => {
     const cleanCPF = cpf.replace(/\D/g, "");
@@ -76,13 +80,47 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
       <div className="space-y-4 md:space-y-5">
         <div>
           <Label htmlFor="nomeCompleto">Nome Completo *</Label>
-          <Input
-            id="nomeCompleto"
-            value={formData.nomeCompleto}
-            onChange={(e) => updateFormData({ nomeCompleto: e.target.value })}
-            placeholder="Digite seu nome completo"
-            required
-          />
+          <div className="relative">
+            <Input
+              id="nomeCompleto"
+              value={formData.nomeCompleto}
+              onChange={(e) => {
+                const value = e.target.value;
+                updateFormData({ nomeCompleto: value });
+                if (value.length === 0) {
+                  setNomeValido(null);
+                } else if (value.length < 3) {
+                  setNomeValido(false);
+                } else {
+                  setNomeValido(true);
+                }
+              }}
+              placeholder="Digite seu nome completo"
+              required
+              className={
+                nomeValido === null
+                  ? ""
+                  : nomeValido
+                  ? "border-green-500 pr-10"
+                  : "border-red-500 pr-10"
+              }
+            />
+            {nomeValido !== null && (
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                {nomeValido ? (
+                  <CheckCircle2 className="w-5 h-5 text-green-500" />
+                ) : (
+                  <AlertCircle className="w-5 h-5 text-red-500" />
+                )}
+              </div>
+            )}
+          </div>
+          {nomeValido === false && (
+            <p className="text-sm text-red-600 mt-1 flex items-center gap-1">
+              <AlertCircle className="w-4 h-4" />
+              Nome deve ter pelo menos 3 caracteres
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -118,47 +156,154 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               )}
             </div>
             {cpfValido === false && (
-              <p className="text-sm text-red-600 mt-1">CPF inválido</p>
+              <p className="text-sm text-red-600 mt-1 flex items-center gap-1">
+                <AlertCircle className="w-4 h-4" />
+                CPF inválido
+              </p>
             )}
           </div>
 
           <div>
             <Label htmlFor="telefone">Telefone *</Label>
-            <Input
-              id="telefone"
-              value={formData.telefone}
-              onChange={(e) => updateFormData({ telefone: phoneMask(e.target.value) })}
-              placeholder="(00) 00000-0000"
-              maxLength={15}
-              required
-            />
+            <div className="relative">
+              <Input
+                id="telefone"
+                value={formData.telefone}
+                onChange={(e) => {
+                  const value = phoneMask(e.target.value);
+                  updateFormData({ telefone: value });
+                  const cleanPhone = value.replace(/\D/g, "");
+                  if (cleanPhone.length === 0) {
+                    setTelefoneValido(null);
+                  } else if (cleanPhone.length >= 10) {
+                    setTelefoneValido(true);
+                  } else {
+                    setTelefoneValido(false);
+                  }
+                }}
+                placeholder="(00) 00000-0000"
+                maxLength={15}
+                required
+                className={
+                  telefoneValido === null
+                    ? ""
+                    : telefoneValido
+                    ? "border-green-500 pr-10"
+                    : "border-red-500 pr-10"
+                }
+              />
+              {telefoneValido !== null && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  {telefoneValido ? (
+                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                  ) : (
+                    <AlertCircle className="w-5 h-5 text-red-500" />
+                  )}
+                </div>
+              )}
+            </div>
+            {telefoneValido === false && (
+              <p className="text-sm text-red-600 mt-1 flex items-center gap-1">
+                <AlertCircle className="w-4 h-4" />
+                Telefone incompleto
+              </p>
+            )}
           </div>
         </div>
 
         <div>
           <Label htmlFor="email">E-mail *</Label>
-          <Input
-            id="email"
-            type="email"
-            value={formData.email}
-            onChange={(e) => updateFormData({ email: e.target.value })}
-            placeholder="seu@email.com"
-            required
-          />
+          <div className="relative">
+            <Input
+              id="email"
+              type="email"
+              value={formData.email}
+              onChange={(e) => {
+                const value = e.target.value;
+                updateFormData({ email: value });
+                if (value.length === 0) {
+                  setEmailValido(null);
+                } else if (validateEmail(value)) {
+                  setEmailValido(true);
+                } else {
+                  setEmailValido(false);
+                }
+              }}
+              placeholder="seu@email.com"
+              required
+              className={
+                emailValido === null
+                  ? ""
+                  : emailValido
+                  ? "border-green-500 pr-10"
+                  : "border-red-500 pr-10"
+              }
+            />
+            {emailValido !== null && (
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                {emailValido ? (
+                  <CheckCircle2 className="w-5 h-5 text-green-500" />
+                ) : (
+                  <AlertCircle className="w-5 h-5 text-red-500" />
+                )}
+              </div>
+            )}
+          </div>
+          {emailValido === false && (
+            <p className="text-sm text-red-600 mt-1 flex items-center gap-1">
+              <AlertCircle className="w-4 h-4" />
+              E-mail inválido
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <Label htmlFor="cep">CEP *</Label>
-            <Input
-              id="cep"
-              value={formData.cep}
-              onChange={(e) => updateFormData({ cep: cepMask(e.target.value) })}
-              onBlur={(e) => buscarCEP(e.target.value)}
-              placeholder="00000-000"
-              maxLength={9}
-              required
-            />
+            <div className="relative">
+              <Input
+                id="cep"
+                value={formData.cep}
+                onChange={(e) => {
+                  const value = cepMask(e.target.value);
+                  updateFormData({ cep: value });
+                  const cleanCEP = value.replace(/\D/g, "");
+                  if (cleanCEP.length === 0) {
+                    setCepValido(null);
+                  } else if (validateCEP(value)) {
+                    setCepValido(true);
+                  } else {
+                    setCepValido(false);
+                  }
+                }}
+                onBlur={(e) => buscarCEP(e.target.value)}
+                placeholder="00000-000"
+                maxLength={9}
+                required
+                className={
+                  cepValido === null
+                    ? ""
+                    : cepValido
+                    ? "border-green-500 pr-10"
+                    : "border-red-500 pr-10"
+                }
+              />
+              {cepValido !== null && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  {cepValido ? (
+                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                  ) : (
+                    <AlertCircle className="w-5 h-5 text-red-500" />
+                  )}
+                </div>
+              )}
+            </div>
+            {cepValido === false && (
+              <p className="text-sm text-red-600 mt-1 flex items-center gap-1">
+                <AlertCircle className="w-4 h-4" />
+                CEP inválido
+              </p>
+            )}
           </div>
 
           <div className="md:col-span-2">
