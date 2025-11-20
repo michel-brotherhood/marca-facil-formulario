@@ -117,29 +117,68 @@ export const Etapa4_Confirmacao = ({ formData, updateTermos }: Etapa4Props) => {
 
       <Card className="bg-muted/50">
         <CardContent className="pt-6">
-          <h3 className="font-semibold mb-4 text-lg">Perguntas Frequentes</h3>
-          <div className="space-y-4 text-sm">
-            <div>
-              <p className="font-medium mb-1">Quanto tempo leva o processo?</p>
-              <p className="text-muted-foreground">
-                O processo completo de registro de marca no INPI leva em média 12 a 24 meses,
-                dependendo da análise e possíveis oposições.
-              </p>
-            </div>
-            <div>
-              <p className="font-medium mb-1">Qual o valor do investimento?</p>
-              <p className="text-muted-foreground">
-                Entre em contato conosco para receber um orçamento personalizado de acordo com
-                suas necessidades específicas.
-              </p>
-            </div>
-            <div>
-              <p className="font-medium mb-1">A marca é protegida em todo o Brasil?</p>
-              <p className="text-muted-foreground">
-                Sim, o registro no INPI garante proteção em todo território nacional.
-              </p>
-            </div>
-          </div>
+          <h3 className="font-semibold mb-4 text-lg flex items-center gap-2">
+            ❓ Perguntas Frequentes
+          </h3>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-1">
+              <AccordionTrigger className="text-sm font-medium">
+                1. Taxas Oficiais do INPI
+              </AccordionTrigger>
+              <AccordionContent className="text-sm text-muted-foreground">
+                Nossa equipe analisará sua solicitação e entrará em contato para apresentar uma proposta personalizada.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-2">
+              <AccordionTrigger className="text-sm font-medium">
+                2. Classes Adicionais
+              </AccordionTrigger>
+              <AccordionContent className="text-sm text-muted-foreground">
+                Se sua marca precisar ser registrada em múltiplas classes, nossa equipe informará sobre as opções disponíveis e custos adicionais durante o atendimento.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-3">
+              <AccordionTrigger className="text-sm font-medium">
+                3. Marca Não Registrável
+              </AccordionTrigger>
+              <AccordionContent className="text-sm text-muted-foreground">
+                E se na análise eu descobrir que não posso registrar essa marca? Não se preocupe, te orientamos e aguardamos até você definir uma nova marca, sem nenhuma cobrança adicional. Confira como funciona o{" "}
+                <a 
+                  href="https://marcafacil.legal/passo-a-passo" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline font-medium"
+                >
+                  PASSO A PASSO
+                </a>{" "}
+                em nosso site.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-4">
+              <AccordionTrigger className="text-sm font-medium">
+                4. Processo Indeferido
+              </AccordionTrigger>
+              <AccordionContent className="text-sm text-muted-foreground">
+                E se o meu processo for INDEFERIDO? Nós fazemos um novo processo sem cobrar pelo serviço ou devolvemos o seu dinheiro.
+                <br />
+                <span className="text-xs italic">* Não se aplica para taxas do INPI</span>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-5">
+              <AccordionTrigger className="text-sm font-medium">
+                5. Oposição ao Processo
+              </AccordionTrigger>
+              <AccordionContent className="text-sm text-muted-foreground">
+                E se o meu processo sofrer uma OPOSIÇÃO? Ao menos que na nossa análise nós tenhamos apontado essa possibilidade e você tenha decidido correr esse risco, nós não cobramos para defender a sua marca.
+                <br />
+                <span className="text-xs italic">* Não se aplica para taxas do INPI</span>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </CardContent>
       </Card>
 
@@ -151,7 +190,12 @@ export const Etapa4_Confirmacao = ({ formData, updateTermos }: Etapa4Props) => {
         />
         <Label htmlFor="termos" className="cursor-pointer leading-tight">
           Li e concordo com a nossa{" "}
-          <a href="#" className="text-primary hover:underline font-medium">
+          <a 
+            href="https://marcafacil.legal/politicas" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-primary hover:underline font-medium"
+          >
             POLÍTICA DE TRABALHO
           </a>
           . *
