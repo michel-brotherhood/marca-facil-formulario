@@ -5,6 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
+import { CheckCircle2, AlertCircle } from "lucide-react";
+import { useState } from "react";
 
 interface Etapa3Props {
   formData: FormState["marca"];
@@ -12,6 +14,8 @@ interface Etapa3Props {
 }
 
 export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => {
+  const [nomeValido, setNomeValido] = useState<boolean | null>(null);
+  const [atividadesValido, setAtividadesValido] = useState<boolean | null>(null);
   return (
     <div className="space-y-6 md:space-y-8">
       <div className="space-y-1">
@@ -22,13 +26,47 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
       <div className="space-y-4 md:space-y-5">
         <div>
           <Label htmlFor="nomeMarca">Qual é a marca que vamos registrar? *</Label>
-          <Input
-            id="nomeMarca"
-            value={formData.nome}
-            onChange={(e) => updateFormData({ nome: e.target.value })}
-            placeholder=""
-            required
-          />
+          <div className="relative">
+            <Input
+              id="nomeMarca"
+              value={formData.nome}
+              onChange={(e) => {
+                const value = e.target.value;
+                updateFormData({ nome: value });
+                if (value.length === 0) {
+                  setNomeValido(null);
+                } else if (value.length >= 2) {
+                  setNomeValido(true);
+                } else {
+                  setNomeValido(false);
+                }
+              }}
+              placeholder="Digite o nome da marca"
+              required
+              className={
+                nomeValido === null
+                  ? ""
+                  : nomeValido
+                  ? "border-green-500 pr-10"
+                  : "border-red-500 pr-10"
+              }
+            />
+            {nomeValido !== null && (
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                {nomeValido ? (
+                  <CheckCircle2 className="w-5 h-5 text-green-500" />
+                ) : (
+                  <AlertCircle className="w-5 h-5 text-red-500" />
+                )}
+              </div>
+            )}
+          </div>
+          {nomeValido === false && (
+            <p className="text-sm text-red-600 mt-1 flex items-center gap-1">
+              <AlertCircle className="w-4 h-4" />
+              Nome da marca muito curto
+            </p>
+          )}
         </div>
 
         <div>
@@ -64,15 +102,52 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
           <Label htmlFor="atividades">
             Descreva resumidamente as atividades da sua marca *
           </Label>
-          <Textarea
-            id="atividades"
-            value={formData.atividades}
-            onChange={(e) => updateFormData({ atividades: e.target.value })}
-            placeholder="Ex: Venda de roupas femininas, consultoria em marketing digital, fabricação de produtos alimentícios..."
-            rows={4}
-            required
-            className="mt-2 bg-muted/30"
-          />
+          <div className="relative">
+            <Textarea
+              id="atividades"
+              value={formData.atividades}
+              onChange={(e) => {
+                const value = e.target.value;
+                updateFormData({ atividades: value });
+                if (value.length === 0) {
+                  setAtividadesValido(null);
+                } else if (value.length >= 10) {
+                  setAtividadesValido(true);
+                } else {
+                  setAtividadesValido(false);
+                }
+              }}
+              placeholder="Ex: Venda de roupas femininas, consultoria em marketing digital, fabricação de produtos alimentícios..."
+              rows={4}
+              required
+              className={`mt-2 bg-muted/30 ${
+                atividadesValido === null
+                  ? ""
+                  : atividadesValido
+                  ? "border-green-500"
+                  : "border-red-500"
+              }`}
+            />
+          </div>
+          <div className="flex items-center justify-between mt-1">
+            <div>
+              {atividadesValido === false && (
+                <p className="text-sm text-red-600 flex items-center gap-1">
+                  <AlertCircle className="w-4 h-4" />
+                  Mínimo de 10 caracteres
+                </p>
+              )}
+              {atividadesValido === true && (
+                <p className="text-sm text-green-600 flex items-center gap-1">
+                  <CheckCircle2 className="w-4 h-4" />
+                  Descrição válida
+                </p>
+              )}
+            </div>
+            <span className={`text-xs ${formData.atividades.length >= 10 ? 'text-green-600' : 'text-muted-foreground'}`}>
+              {formData.atividades.length} caracteres
+            </span>
+          </div>
         </div>
 
         <div>
