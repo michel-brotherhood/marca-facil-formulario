@@ -46,32 +46,51 @@ const Index = () => {
     }));
   };
 
+  const highlightInvalidFields = (step: number) => {
+    const inputs = document.querySelectorAll(`input, textarea, [role="radiogroup"]`);
+    inputs.forEach(input => {
+      input.classList.remove('border-red-500', 'ring-red-500');
+    });
+  };
+
   const validateStep = (step: number): boolean => {
+    highlightInvalidFields(step);
+    
     switch (step) {
       case 1: {
         if (!formState.cliente.nomeCompleto) {
           toast.error("Por favor, preencha seu nome completo");
+          document.getElementById("nomeCompleto")?.classList.add('border-red-500', 'ring-2', 'ring-red-500');
           return false;
         }
         if (!formState.cliente.cpf || !validateCPF(formState.cliente.cpf)) {
           toast.error("Por favor, insira um CPF válido");
+          document.getElementById("cpf")?.classList.add('border-red-500', 'ring-2', 'ring-red-500');
           return false;
         }
         if (!formState.cliente.email || !validateEmail(formState.cliente.email)) {
           toast.error("Por favor, insira um email válido");
+          document.getElementById("email")?.classList.add('border-red-500', 'ring-2', 'ring-red-500');
           return false;
         }
         if (!formState.cliente.telefone || formState.cliente.telefone.length < 14) {
           toast.error("Por favor, preencha seu telefone completo");
+          document.getElementById("telefone")?.classList.add('border-red-500', 'ring-2', 'ring-red-500');
           return false;
         }
         if (!formState.cliente.cep || !validateCEP(formState.cliente.cep)) {
           toast.error("Por favor, insira um CEP válido");
+          document.getElementById("cep")?.classList.add('border-red-500', 'ring-2', 'ring-red-500');
           return false;
         }
         if (!formState.cliente.logradouro || !formState.cliente.numero || 
             !formState.cliente.bairro || !formState.cliente.cidade || !formState.cliente.uf) {
           toast.error("Por favor, preencha todos os campos do endereço");
+          if (!formState.cliente.logradouro) document.getElementById("logradouro")?.classList.add('border-red-500', 'ring-2', 'ring-red-500');
+          if (!formState.cliente.numero) document.getElementById("numero")?.classList.add('border-red-500', 'ring-2', 'ring-red-500');
+          if (!formState.cliente.bairro) document.getElementById("bairro")?.classList.add('border-red-500', 'ring-2', 'ring-red-500');
+          if (!formState.cliente.cidade) document.getElementById("cidade")?.classList.add('border-red-500', 'ring-2', 'ring-red-500');
+          if (!formState.cliente.uf) document.getElementById("uf")?.classList.add('border-red-500', 'ring-2', 'ring-red-500');
           return false;
         }
         if (!formState.cliente.preferenciaContato) {
@@ -168,6 +187,7 @@ const Index = () => {
       case 3: {
         if (!formState.marca.nome) {
           toast.error("Nome da marca é obrigatório");
+          document.getElementById("nomeMarca")?.classList.add('border-red-500', 'ring-2', 'ring-red-500');
           return false;
         }
         if (!formState.marca.utilizacao) {
@@ -176,6 +196,7 @@ const Index = () => {
         }
         if (!formState.marca.atividades || formState.marca.atividades.length < 10) {
           toast.error("Descreva as atividades da marca (mínimo 10 caracteres)");
+          document.getElementById("atividades")?.classList.add('border-red-500', 'ring-2', 'ring-red-500');
           return false;
         }
         if (formState.marca.possuiLogo === null) {

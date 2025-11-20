@@ -64,14 +64,19 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
           <Label htmlFor="atividades">
             Descreva resumidamente as atividades da sua marca *
           </Label>
-          <Textarea
-            id="atividades"
-            value={formData.atividades}
-            onChange={(e) => updateFormData({ atividades: e.target.value })}
-            placeholder=""
-            rows={4}
-            required
-          />
+          <Card className="mt-2 bg-muted/50">
+            <CardContent className="pt-4">
+              <Textarea
+                id="atividades"
+                value={formData.atividades}
+                onChange={(e) => updateFormData({ atividades: e.target.value })}
+                placeholder="Ex: Venda de roupas femininas, consultoria em marketing digital, fabricação de produtos alimentícios..."
+                rows={4}
+                required
+                className="bg-background"
+              />
+            </CardContent>
+          </Card>
         </div>
 
         <div>
