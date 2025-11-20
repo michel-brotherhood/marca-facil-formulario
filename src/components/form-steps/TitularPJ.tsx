@@ -68,27 +68,42 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
 
       {formData.dadosCnpj && (
         <>
-          <Card className="bg-muted/50">
+          <Card className="bg-green-50 border-green-200">
             <CardContent className="pt-6">
-              <h3 className="font-semibold mb-4 text-lg">Dados da Receita Federal</h3>
+              <div className="flex items-start gap-2 mb-4">
+                <div className="flex-shrink-0 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center mt-0.5">
+                  <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-lg text-green-800">Dados da Receita Federal</h3>
+              </div>
               <div className="space-y-3">
                 <div>
-                  <p className="text-sm text-muted-foreground">Razão Social</p>
-                  <p className="font-medium">{formData.dadosCnpj.razaoSocial}</p>
+                  <p className="text-sm font-semibold text-green-800">Razão Social:</p>
+                  <p className="font-medium text-green-900">{formData.dadosCnpj.razaoSocial}</p>
                 </div>
                 {formData.dadosCnpj.nomeFantasia && (
                   <div>
-                    <p className="text-sm text-muted-foreground">Nome Fantasia</p>
-                    <p className="font-medium">{formData.dadosCnpj.nomeFantasia}</p>
+                    <p className="text-sm font-semibold text-green-800">Nome Fantasia:</p>
+                    <p className="font-medium text-green-900">{formData.dadosCnpj.nomeFantasia}</p>
                   </div>
                 )}
                 <div>
-                  <p className="text-sm text-muted-foreground">CNAE Principal</p>
-                  <p className="font-medium">{formData.dadosCnpj.cnae}</p>
+                  <p className="text-sm font-semibold text-green-800">Porte:</p>
+                  <p className="font-medium text-green-900">{formData.dadosCnpj.situacao}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Situação Cadastral</p>
-                  <p className="font-medium">{formData.dadosCnpj.situacao}</p>
+                  <p className="text-sm font-semibold text-green-800">Natureza Jurídica:</p>
+                  <p className="font-medium text-green-900">Sociedade Empresária Limitada</p>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-green-800">Endereço:</p>
+                  <p className="font-medium text-green-900">{formData.dadosCnpj.cnae}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-green-800">CNAE Principal:</p>
+                  <p className="font-medium text-green-900">{formData.dadosCnpj.cnae}</p>
                 </div>
               </div>
             </CardContent>
@@ -112,64 +127,86 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
                   SIM
                 </Label>
               </div>
-              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+              <div className={`flex items-center space-x-2 p-3 rounded-lg cursor-pointer transition-colors ${
+                formData.dadosCnpjCorretos === false ? 'border-2 border-primary' : 'border'
+              }`}>
                 <RadioGroupItem value="false" id="dados-corretos-nao" />
                 <Label htmlFor="dados-corretos-nao" className="font-normal cursor-pointer">
                   NÃO
                 </Label>
               </div>
             </RadioGroup>
-            <Card className="mt-3 bg-primary/5 border-l-4 border-primary">
-              <CardContent className="pt-4 pb-4">
-                <p className="text-sm font-medium">❓ Precisa de Ajuda?</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Precisa de ajuda com os dados ou tem dúvidas sobre o processo?
-                </p>
-                <a
-                  href="https://calendly.com/admin-marcafacil/30min"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-3 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
-                >
-                  ☕ Agendar Videoconferência Gratuita (30 min)
-                </a>
-              </CardContent>
-            </Card>
           </div>
 
-          <div>
-            <Label className="mb-3 block">
-              Você é o Responsável Legal deste CNPJ? *
-            </Label>
-            <RadioGroup
-              value={formData.representante}
-              onValueChange={(value: "sim" | "nao" | "procurador") =>
-                updateFormData({ representante: value })
-              }
-            >
-              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
-                <RadioGroupItem value="sim" id="responsavel-sim" />
-                <Label htmlFor="responsavel-sim" className="font-normal cursor-pointer">
-                  SIM
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
-                <RadioGroupItem value="nao" id="responsavel-nao" />
-                <Label htmlFor="responsavel-nao" className="font-normal cursor-pointer">
-                  NÃO
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
-                <RadioGroupItem value="procurador" id="responsavel-procurador" />
-                <Label htmlFor="responsavel-procurador" className="font-normal cursor-pointer">
-                  PROCURADOR
-                </Label>
-              </div>
-            </RadioGroup>
-            <p className="mt-2 text-sm font-medium text-orange-600">
-              ⚠️ Apenas o Representante Legal ou procurador devidamente constituído do Titular podem contratar nossos serviços.
-            </p>
-          </div>
+          {formData.dadosCnpjCorretos === false && (
+            <Card className="bg-red-50 border-red-200 border-l-4 border-l-red-500">
+              <CardContent className="pt-4 pb-4">
+                <div className="flex items-start gap-2">
+                  <span className="text-2xl">📞</span>
+                  <div>
+                    <p className="text-sm font-semibold text-red-800">Precisa de ajuda com os dados?</p>
+                    <p className="text-sm text-red-700 mt-1">
+                      Entre em contato conosco via{" "}
+                      <a 
+                        href="https://wa.me/5521999999999" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-blue-600 underline hover:text-blue-800"
+                      >
+                        WhatsApp
+                      </a>
+                      {" "}ou{" "}
+                      <a
+                        href="https://calendly.com/admin-marcafacil/30min"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 underline hover:text-blue-800"
+                      >
+                        agende uma videoconferência gratuita
+                      </a>
+                      .
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {formData.dadosCnpjCorretos === true && (
+            <div>
+              <Label className="mb-3 block">
+                Você é o Responsável Legal deste CNPJ? *
+              </Label>
+              <RadioGroup
+                value={formData.representante}
+                onValueChange={(value: "sim" | "nao" | "procurador") =>
+                  updateFormData({ representante: value })
+                }
+              >
+                <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+                  <RadioGroupItem value="sim" id="responsavel-sim" />
+                  <Label htmlFor="responsavel-sim" className="font-normal cursor-pointer">
+                    SIM
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+                  <RadioGroupItem value="nao" id="responsavel-nao" />
+                  <Label htmlFor="responsavel-nao" className="font-normal cursor-pointer">
+                    NÃO
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+                  <RadioGroupItem value="procurador" id="responsavel-procurador" />
+                  <Label htmlFor="responsavel-procurador" className="font-normal cursor-pointer">
+                    PROCURADOR
+                  </Label>
+                </div>
+              </RadioGroup>
+              <p className="mt-2 text-sm font-medium text-orange-600">
+                ⚠️ Apenas o Representante Legal ou procurador devidamente constituído do Titular podem contratar nossos serviços.
+              </p>
+            </div>
+          )}
 
           {formData.representante === "procurador" && (
             <div>
