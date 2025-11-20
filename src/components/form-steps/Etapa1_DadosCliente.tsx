@@ -95,7 +95,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
                   setNomeValido(true);
                 }
               }}
-              placeholder="Digite seu nome completo"
+              placeholder="Ex: João da Silva Santos"
               required
               className={
                 nomeValido === null
@@ -312,7 +312,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="logradouro"
               value={formData.logradouro}
               onChange={(e) => updateFormData({ logradouro: e.target.value })}
-              placeholder="Rua, Avenida..."
+              placeholder="Ex: Rua das Flores, Avenida Paulista..."
               required
             />
           </div>
@@ -325,7 +325,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="numero"
               value={formData.numero}
               onChange={(e) => updateFormData({ numero: e.target.value })}
-              placeholder="123"
+              placeholder="Ex: 123, 456-B..."
               required
             />
           </div>
@@ -336,7 +336,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="complemento"
               value={formData.complemento}
               onChange={(e) => updateFormData({ complemento: e.target.value })}
-              placeholder="Apto, Sala..."
+              placeholder="Ex: Apto 101, Sala 5, Bloco A..."
             />
           </div>
 
@@ -346,7 +346,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="bairro"
               value={formData.bairro}
               onChange={(e) => updateFormData({ bairro: e.target.value })}
-              placeholder="Bairro"
+              placeholder="Ex: Centro, Jardim América..."
               required
             />
           </div>
@@ -359,7 +359,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="cidade"
               value={formData.cidade}
               onChange={(e) => updateFormData({ cidade: e.target.value })}
-              placeholder="Cidade"
+              placeholder="Ex: São Paulo, Rio de Janeiro..."
               required
             />
           </div>
@@ -370,7 +370,7 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
               id="uf"
               value={formData.uf}
               onChange={(e) => updateFormData({ uf: e.target.value.toUpperCase() })}
-              placeholder="UF"
+              placeholder="Ex: SP, RJ, MG..."
               maxLength={2}
               required
             />

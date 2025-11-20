@@ -189,7 +189,7 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
           id="nomeTitular"
           value={formData.nomeCompleto}
           onChange={(e) => updateFormData({ nomeCompleto: e.target.value })}
-          placeholder=""
+          placeholder="Ex: Maria da Silva Santos"
           required
         />
       </div>
@@ -251,7 +251,7 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
             value={formData.cep}
             onChange={(e) => updateFormData({ cep: cepMask(e.target.value) })}
             onBlur={(e) => buscarCEP(e.target.value)}
-            placeholder=""
+            placeholder="00000-000"
             maxLength={9}
             required
           />
@@ -263,7 +263,7 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
             id="logradouroTitular"
             value={formData.logradouro}
             onChange={(e) => updateFormData({ logradouro: e.target.value })}
-            placeholder=""
+            placeholder="Ex: Rua das Flores, Av. Paulista..."
             required
           />
         </div>
@@ -276,7 +276,7 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
             id="numeroTitular"
             value={formData.numero}
             onChange={(e) => updateFormData({ numero: e.target.value })}
-            placeholder=""
+            placeholder="Ex: 123, 456-B..."
             required
           />
         </div>
@@ -287,7 +287,7 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
             id="complementoTitular"
             value={formData.complemento}
             onChange={(e) => updateFormData({ complemento: e.target.value })}
-            placeholder=""
+            placeholder="Ex: Apto 101, Sala 5..."
           />
         </div>
 
@@ -297,7 +297,7 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
             id="bairroTitular"
             value={formData.bairro}
             onChange={(e) => updateFormData({ bairro: e.target.value })}
-            placeholder=""
+            placeholder="Ex: Centro, Jardim América..."
             required
           />
         </div>
@@ -310,7 +310,7 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
             id="cidadeTitular"
             value={formData.cidade}
             onChange={(e) => updateFormData({ cidade: e.target.value })}
-            placeholder=""
+            placeholder="Ex: São Paulo, Rio de Janeiro..."
             required
           />
         </div>
@@ -321,7 +321,7 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
             id="ufTitular"
             value={formData.uf}
             onChange={(e) => updateFormData({ uf: e.target.value.toUpperCase() })}
-            placeholder=""
+            placeholder="SP"
             maxLength={2}
             required
           />
@@ -334,7 +334,7 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
           id="profissao"
           value={formData.profissao}
           onChange={(e) => updateFormData({ profissao: e.target.value })}
-          placeholder=""
+          placeholder="Ex: Advogado, Engenheiro, Empresário..."
           required
         />
       </div>
