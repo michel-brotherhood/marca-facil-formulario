@@ -2,9 +2,8 @@ import { FormState } from "@/types/formTypes";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { cpfMask, cnpjMask, cepMask } from "@/utils/masks";
+import { cpfMask, cepMask } from "@/utils/masks";
 import { validateCEP } from "@/utils/validators";
-import { FileUpload } from "@/components/FileUpload";
 import { toast } from "sonner";
 
 interface TitularPFProps {
@@ -230,49 +229,82 @@ export const TitularPF = ({ formData, updateFormData }: TitularPFProps) => {
       </div>
 
       <div>
-        <FileUpload
-          label="Upload do RG do Titular (opcional)"
-          tipoArquivo="rg_titular"
-          maxSize={5}
-          acceptedTypes=".pdf,.jpg,.jpeg,.png"
-          onUploadSuccess={(result) => {
-            if (result.fileId) {
-              updateFormData({ rgTitularUrl: result.fileName || "" });
+        <Label htmlFor="rgTitular">Upload do RG do Titular (opcional)</Label>
+        <Input
+          id="rgTitular"
+          type="file"
+          accept=".pdf,.jpg,.jpeg,.png"
+          onChange={async (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            
+            if (file.size > 5 * 1024 * 1024) {
+              toast.error("O arquivo deve ter no máximo 5MB");
+              e.target.value = "";
+              return;
             }
+            
+            toast.success(`Arquivo ${file.name} selecionado`);
+            updateFormData({ rgTitularUrl: file.name });
           }}
-          currentFile={formData.rgTitularUrl}
+          className="mt-2"
         />
+        {formData.rgTitularUrl && (
+          <p className="text-sm text-success mt-1">✓ {formData.rgTitularUrl}</p>
+        )}
       </div>
 
       <div>
-        <FileUpload
-          label="Upload do Diploma/Prova de Qualificação Profissional (opcional)"
-          tipoArquivo="diploma"
-          maxSize={5}
-          acceptedTypes=".pdf,.jpg,.jpeg,.png"
-          onUploadSuccess={(result) => {
-            if (result.fileId) {
-              updateFormData({ diplomaUrl: result.fileName || "" });
+        <Label htmlFor="diploma">Upload do Diploma/Prova de Qualificação Profissional (opcional)</Label>
+        <Input
+          id="diploma"
+          type="file"
+          accept=".pdf,.jpg,.jpeg,.png"
+          onChange={async (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            
+            if (file.size > 5 * 1024 * 1024) {
+              toast.error("O arquivo deve ter no máximo 5MB");
+              e.target.value = "";
+              return;
             }
+            
+            toast.success(`Arquivo ${file.name} selecionado`);
+            updateFormData({ diplomaUrl: file.name });
           }}
-          currentFile={formData.diplomaUrl}
+          className="mt-2"
         />
+        {formData.diplomaUrl && (
+          <p className="text-sm text-success mt-1">✓ {formData.diplomaUrl}</p>
+        )}
       </div>
 
       {formData.representante === "procurador" && (
         <div>
-          <FileUpload
-            label="Upload da Procuração (opcional)"
-            tipoArquivo="procuracao_pf"
-            maxSize={5}
-            acceptedTypes=".pdf,.jpg,.jpeg,.png"
-            onUploadSuccess={(result) => {
-              if (result.fileId) {
-                updateFormData({ procuracaoUrl: result.fileName || "" });
+          <Label htmlFor="procuracaoPF">Upload da Procuração (opcional)</Label>
+          <Input
+            id="procuracaoPF"
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            onChange={async (e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              
+              if (file.size > 5 * 1024 * 1024) {
+                toast.error("O arquivo deve ter no máximo 5MB");
+                e.target.value = "";
+                return;
               }
+              
+              toast.success(`Arquivo ${file.name} selecionado`);
+              updateFormData({ procuracaoUrl: file.name });
             }}
-            currentFile={formData.procuracaoUrl}
+            className="mt-2"
           />
+          {formData.procuracaoUrl && (
+            <p className="text-sm text-success mt-1">✓ {formData.procuracaoUrl}</p>
+          )}
         </div>
       )}
     </div>

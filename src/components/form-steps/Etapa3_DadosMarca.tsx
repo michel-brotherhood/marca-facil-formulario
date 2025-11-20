@@ -5,7 +5,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
-import { FileUpload } from "@/components/FileUpload";
 
 interface Etapa3Props {
   formData: FormState["marca"];
@@ -118,19 +117,30 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
                   </p>
                 </div>
 
-                <FileUpload
-                  label=""
-                  tipoArquivo="logo"
-                  maxSize={2}
-                  acceptedTypes=".jpg,.jpeg"
-                  onUploadSuccess={(result) => {
-                    if (result.fileId) {
-                      updateFormData({ logoUrl: result.fileName || "" });
+                <Label htmlFor="logo">Upload do Logotipo</Label>
+                <Input
+                  id="logo"
+                  type="file"
+                  accept=".jpg,.jpeg"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    
+                    if (file.size > 2 * 1024 * 1024) {
+                      toast.error("O arquivo deve ter no máximo 2MB");
+                      e.target.value = "";
+                      return;
                     }
+                    
+                    toast.success(`Arquivo ${file.name} selecionado`);
+                    updateFormData({ logoUrl: file.name });
                   }}
-                  currentFile={formData.logoUrl}
-                  showPreview={true}
+                  className="mt-2"
+                  required
                 />
+                {formData.logoUrl && (
+                  <p className="text-sm text-success mt-1">✓ {formData.logoUrl}</p>
+                )}
               </CardContent>
             </Card>
           </div>

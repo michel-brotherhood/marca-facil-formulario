@@ -169,18 +169,29 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
 
           {formData.representante === "procurador" && (
             <div>
-              <FileUpload
-                label="Upload da Procuração (opcional)"
-                tipoArquivo="procuracao_pj"
-                maxSize={5}
-                acceptedTypes=".pdf,.jpg,.jpeg,.png"
-                onUploadSuccess={(result) => {
-                  if (result.fileId) {
-                    updateFormData({ procuracaoUrl: result.fileName || "" });
+              <Label htmlFor="procuracaoPJ">Upload da Procuração (opcional)</Label>
+              <Input
+                id="procuracaoPJ"
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  
+                  if (file.size > 5 * 1024 * 1024) {
+                    toast.error("O arquivo deve ter no máximo 5MB");
+                    e.target.value = "";
+                    return;
                   }
+                  
+                  toast.success(`Arquivo ${file.name} selecionado`);
+                  updateFormData({ procuracaoUrl: file.name });
                 }}
-                currentFile={formData.procuracaoUrl}
+                className="mt-2"
               />
+              {formData.procuracaoUrl && (
+                <p className="text-sm text-success mt-1">✓ {formData.procuracaoUrl}</p>
+              )}
             </div>
           )}
         </>
