@@ -109,6 +109,11 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 
+  /* Prevent horizontal overflow on mobile */
+  html, body {
+    @apply overflow-x-hidden;
+  }
+
   /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
