@@ -251,20 +251,28 @@ const Index = () => {
   };
 
   const renderStep = () => {
-    switch (formState.currentStep) {
-      case 1:
-        return <Etapa1_DadosCliente formData={formState.cliente} updateFormData={updateCliente} />;
-      case 2:
-        return <Etapa2_DadosTitular formData={formState.titular} updateFormData={updateTitular} clienteData={formState.cliente} />;
-      case 3:
-        return <Etapa3_DadosMarca formData={formState.marca} updateFormData={updateMarca} />;
-      case 4:
-        return <Etapa4_Confirmacao formData={formState} updateTermos={updateTermos} />;
-      case 5:
-        return <Etapa5_Obrigado />;
-      default:
-        return null;
-    }
+    const stepContent = (() => {
+      switch (formState.currentStep) {
+        case 1:
+          return <Etapa1_DadosCliente formData={formState.cliente} updateFormData={updateCliente} />;
+        case 2:
+          return <Etapa2_DadosTitular formData={formState.titular} updateFormData={updateTitular} clienteData={formState.cliente} />;
+        case 3:
+          return <Etapa3_DadosMarca formData={formState.marca} updateFormData={updateMarca} />;
+        case 4:
+          return <Etapa4_Confirmacao formData={formState} updateTermos={updateTermos} />;
+        case 5:
+          return <Etapa5_Obrigado />;
+        default:
+          return null;
+      }
+    })();
+
+    return (
+      <div className="animate-fade-in">
+        {stepContent}
+      </div>
+    );
   };
 
   if (formState.currentStep === 5) {
@@ -286,18 +294,18 @@ const Index = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           <div className="lg:col-span-2">
-            <Card className="shadow-xl border-0">
+            <Card className="shadow-xl border-0 transition-all duration-300">
               <CardContent className="p-4 sm:p-6 md:p-8">
                 {renderStep()}
               </CardContent>
             </Card>
 
-            <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 mt-6 md:mt-8">
+            <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 mt-6 md:mt-8 animate-fade-in">
               {formState.currentStep > 1 && (
                 <Button
                   variant="outline"
                   onClick={prevStep}
-                  className="w-full sm:w-auto order-2 sm:order-1"
+                  className="w-full sm:w-auto order-2 sm:order-1 transition-all duration-200 hover:scale-105"
                   size="lg"
                 >
                   <ArrowLeft className="mr-2 h-4 w-4" />
@@ -308,7 +316,7 @@ const Index = () => {
               {formState.currentStep < 4 ? (
                 <Button 
                   onClick={nextStep}
-                  className="w-full sm:w-auto order-1 sm:order-2"
+                  className="w-full sm:w-auto order-1 sm:order-2 transition-all duration-200 hover:scale-105"
                   size="lg"
                 >
                   Próximo
@@ -317,7 +325,7 @@ const Index = () => {
               ) : (
                 <Button 
                   onClick={handleSubmit}
-                  className="w-full sm:w-auto order-1 sm:order-2"
+                  className="w-full sm:w-auto order-1 sm:order-2 transition-all duration-200 hover:scale-105"
                   size="lg"
                 >
                   Finalizar Pedido
@@ -326,7 +334,7 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="hidden lg:block">
+          <div className="hidden lg:block animate-fade-in">
             <Sidebar />
           </div>
         </div>
