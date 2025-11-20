@@ -13,13 +13,13 @@ interface Etapa3Props {
 
 export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-foreground mb-2">Informações sobre a Marca</h2>
-        <p className="text-muted-foreground">Informações sobre a marca a ser registrada</p>
+    <div className="space-y-6 md:space-y-8">
+      <div className="space-y-1">
+        <h2 className="text-xl md:text-2xl font-bold text-foreground">Informações sobre a Marca</h2>
+        <p className="text-sm md:text-base text-muted-foreground">Informações sobre a marca a ser registrada</p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 md:space-y-5">
         <div>
           <Label htmlFor="nomeMarca">Qual é a marca que vamos registrar? *</Label>
           <Input

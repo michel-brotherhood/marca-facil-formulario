@@ -43,13 +43,13 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-foreground mb-2">Dados do Cliente</h2>
-        <p className="text-muted-foreground">Preencha seus dados pessoais</p>
+    <div className="space-y-6 md:space-y-8">
+      <div className="space-y-1">
+        <h2 className="text-xl md:text-2xl font-bold text-foreground">Dados do Cliente</h2>
+        <p className="text-sm md:text-base text-muted-foreground">Preencha seus dados pessoais</p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 md:space-y-5">
         <div>
           <Label htmlFor="nomeCompleto">Nome Completo *</Label>
           <Input

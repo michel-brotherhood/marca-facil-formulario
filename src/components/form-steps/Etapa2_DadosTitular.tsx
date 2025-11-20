@@ -11,36 +11,40 @@ interface Etapa2Props {
 
 export const Etapa2_DadosTitular = ({ formData, updateFormData }: Etapa2Props) => {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-foreground mb-2">Dados do Titular</h2>
-        <p className="text-muted-foreground">Informações sobre o titular da marca</p>
+    <div className="space-y-6 md:space-y-8">
+      <div className="space-y-1">
+        <h2 className="text-xl md:text-2xl font-bold text-foreground">Dados do Titular</h2>
+        <p className="text-sm md:text-base text-muted-foreground">Informações sobre o titular da marca</p>
       </div>
 
-      <div>
-        <Label className="mb-3 block">O Titular (dono) da marca é Pessoa Física ou Pessoa Jurídica? *</Label>
+      <div className="space-y-3">
+        <Label className="text-base font-semibold">
+          O Titular (dono) da marca é Pessoa Física ou Pessoa Jurídica? *
+        </Label>
         <RadioGroup
           value={formData.tipo}
           onValueChange={(value: "pf" | "pj") => updateFormData({ tipo: value })}
         >
-          <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+          <div className="flex items-center space-x-3 p-4 border-2 rounded-xl hover:bg-muted/50 hover:border-primary/50 cursor-pointer transition-all">
             <RadioGroupItem value="pf" id="pf" />
-            <Label htmlFor="pf" className="font-normal cursor-pointer flex items-center gap-2">
+            <Label htmlFor="pf" className="font-normal cursor-pointer flex items-center gap-2 text-base">
               👤 Pessoa Física
             </Label>
           </div>
-          <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+          <div className="flex items-center space-x-3 p-4 border-2 rounded-xl hover:bg-muted/50 hover:border-primary/50 cursor-pointer transition-all">
             <RadioGroupItem value="pj" id="pj" />
-            <Label htmlFor="pj" className="font-normal cursor-pointer flex items-center gap-2">
+            <Label htmlFor="pj" className="font-normal cursor-pointer flex items-center gap-2 text-base">
               🏢 Pessoa Jurídica
             </Label>
           </div>
         </RadioGroup>
       </div>
 
-      {formData.tipo === "pf" ? (
+      {formData.tipo === "pf" && (
         <TitularPF formData={formData} updateFormData={updateFormData} />
-      ) : (
+      )}
+      
+      {formData.tipo === "pj" && (
         <TitularPJ formData={formData} updateFormData={updateFormData} />
       )}
     </div>
