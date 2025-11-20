@@ -4,10 +4,10 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent } from "@/components/ui/card";
 import { cpfMask, cepMask } from "@/utils/masks";
-import { validateCEP } from "@/utils/validators";
+import { validateCEP, validateCPF } from "@/utils/validators";
 import { toast } from "sonner";
-import { useEffect } from "react";
-import { FileText, GraduationCap, FileCheck } from "lucide-react";
+import { useEffect, useState } from "react";
+import { FileText, GraduationCap, FileCheck, CheckCircle2, XCircle } from "lucide-react";
 
 interface TitularPFProps {
   formData: FormState["titular"];
@@ -16,6 +16,28 @@ interface TitularPFProps {
 }
 
 export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFProps) => {
+  const [cpfValido, setCpfValido] = useState<boolean | null>(null);
+  
+  const handleCPFValidation = (cpf: string) => {
+    const cleanCPF = cpf.replace(/\D/g, "");
+    
+    if (cleanCPF.length === 0) {
+      setCpfValido(null);
+      return;
+    }
+    
+    if (cleanCPF.length === 11) {
+      const isValid = validateCPF(cpf);
+      setCpfValido(isValid);
+      
+      if (!isValid) {
+        toast.error("CPF inválido. Verifique o número digitado.");
+      }
+    } else {
+      setCpfValido(false);
+    }
+  };
+  
   // Autopreencher dados quando escolher "NÃO" em sociedade E representante for "titular"
   useEffect(() => {
     if (formData.possuiSociedade === false && formData.representante === "titular" && clienteData) {
@@ -175,14 +197,38 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="cpfTitular">CPF do Titular *</Label>
-          <Input
-            id="cpfTitular"
-            value={formData.cpf}
-            onChange={(e) => updateFormData({ cpf: cpfMask(e.target.value) })}
-            placeholder=""
-            maxLength={14}
-            required
-          />
+          <div className="relative">
+            <Input
+              id="cpfTitular"
+              value={formData.cpf}
+              onChange={(e) => {
+                updateFormData({ cpf: cpfMask(e.target.value) });
+                handleCPFValidation(e.target.value);
+              }}
+              placeholder="000.000.000-00"
+              maxLength={14}
+              required
+              className={
+                cpfValido === null
+                  ? ""
+                  : cpfValido
+                  ? "border-green-500 pr-10"
+                  : "border-red-500 pr-10"
+              }
+            />
+            {cpfValido !== null && (
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                {cpfValido ? (
+                  <CheckCircle2 className="w-5 h-5 text-green-500" />
+                ) : (
+                  <XCircle className="w-5 h-5 text-red-500" />
+                )}
+              </div>
+            )}
+          </div>
+          {cpfValido === false && (
+            <p className="text-sm text-red-600 mt-1">CPF inválido</p>
+          )}
         </div>
 
         <div>
