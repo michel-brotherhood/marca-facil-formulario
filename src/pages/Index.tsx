@@ -88,36 +88,59 @@ const Index = () => {
       case 2: {
         const titular = formState.titular;
 
+        // Validar seleção de tipo de pessoa
+        if (!titular.tipo) {
+          toast.error("Selecione se o titular é Pessoa Física ou Pessoa Jurídica");
+          return false;
+        }
+
         if (titular.tipo === "pf") {
-          if (!titular.nomeCompleto || titular.nomeCompleto.length < 3) {
-            toast.error("Nome completo do titular é obrigatório");
-            return false;
-          }
-          if (!validateCPF(titular.cpf)) {
-            toast.error("CPF do titular inválido");
-            return false;
-          }
-          if (!titular.dataNascimento) {
-            toast.error("Data de nascimento é obrigatória");
-            return false;
-          }
-          if (!validateCEP(titular.cep)) {
-            toast.error("CEP do titular inválido");
-            return false;
-          }
-          if (!titular.logradouro || !titular.numero || !titular.bairro || !titular.cidade || !titular.uf) {
-            toast.error("Preencha todos os campos de endereço do titular");
-            return false;
-          }
-          if (!titular.profissao) {
-            toast.error("Profissão é obrigatória");
-            return false;
-          }
+          // Validar pergunta sobre sociedade
           if (titular.possuiSociedade === null) {
             toast.error("Informe se o titular possui sociedade");
             return false;
           }
-        } else {
+
+          // Se possui sociedade, não pode avançar (deve escolher PJ)
+          if (titular.possuiSociedade === true) {
+            toast.error("Se você é sócio de empresa neste segmento, escolha a opção Pessoa Jurídica");
+            return false;
+          }
+
+          // Se não possui sociedade, validar todos os campos
+          if (titular.possuiSociedade === false) {
+            // Validar seleção de representante
+            if (!titular.representante) {
+              toast.error("Selecione se você é o titular ou procurador");
+              return false;
+            }
+
+            if (!titular.nomeCompleto || titular.nomeCompleto.length < 3) {
+              toast.error("Nome completo do titular é obrigatório");
+              return false;
+            }
+            if (!validateCPF(titular.cpf)) {
+              toast.error("CPF do titular inválido");
+              return false;
+            }
+            if (!titular.dataNascimento) {
+              toast.error("Data de nascimento é obrigatória");
+              return false;
+            }
+            if (!validateCEP(titular.cep)) {
+              toast.error("CEP do titular inválido");
+              return false;
+            }
+            if (!titular.logradouro || !titular.numero || !titular.bairro || !titular.cidade || !titular.uf) {
+              toast.error("Preencha todos os campos de endereço do titular");
+              return false;
+            }
+            if (!titular.profissao) {
+              toast.error("Profissão é obrigatória");
+              return false;
+            }
+          }
+        } else if (titular.tipo === "pj") {
           if (!validateCNPJ(titular.cnpj)) {
             toast.error("CNPJ inválido");
             return false;
@@ -128,6 +151,14 @@ const Index = () => {
           }
           if (titular.dadosCnpjCorretos === null) {
             toast.error("Confirme se os dados do CNPJ estão corretos");
+            return false;
+          }
+          if (!titular.representante) {
+            toast.error("Informe se você é o Responsável Legal");
+            return false;
+          }
+          if (titular.representante === "nao") {
+            toast.error("Apenas o Representante Legal ou procurador podem contratar nossos serviços");
             return false;
           }
         }
