@@ -14,6 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { validateCPF, validateEmail, validateCEP, validateCNPJ } from "@/utils/validators";
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const [formState, setFormState] = useState<FormState>(initialFormState);
@@ -239,13 +240,32 @@ const Index = () => {
     if (!validateStep(4)) return;
 
     try {
-      // Aqui você enviaria os dados para o backend
-      console.log("Dados do formulário:", formState);
+      console.log("Enviando dados do formulário...");
       
+      // Preparar dados para envio
+      const dataToSend = {
+        cliente: formState.cliente,
+        titular: formState.titular,
+        marca: formState.marca,
+      };
+
+      // Chamar edge function para enviar email
+      const { data, error } = await supabase.functions.invoke('send-form-email', {
+        body: dataToSend
+      });
+
+      if (error) {
+        console.error("Erro ao enviar email:", error);
+        toast.error("Erro ao enviar solicitação. Tente novamente.");
+        return;
+      }
+
+      console.log("Resposta do envio:", data);
       toast.success("Solicitação enviada com sucesso!");
       setFormState((prev) => ({ ...prev, currentStep: 5 }));
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
+      console.error("Erro ao processar solicitação:", error);
       toast.error("Erro ao enviar solicitação. Tente novamente.");
     }
   };
