@@ -26,7 +26,7 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
             id="nomeMarca"
             value={formData.nome}
             onChange={(e) => updateFormData({ nome: e.target.value })}
-            placeholder="Digite o nome da marca"
+            placeholder=""
             required
           />
         </div>
@@ -68,7 +68,7 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
             id="atividades"
             value={formData.atividades}
             onChange={(e) => updateFormData({ atividades: e.target.value })}
-            placeholder="Descreva as principais atividades e produtos/serviços da marca..."
+            placeholder=""
             rows={4}
             required
           />

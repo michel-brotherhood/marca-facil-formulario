@@ -56,7 +56,7 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
           value={formData.cnpj}
           onChange={(e) => updateFormData({ cnpj: cnpjMask(e.target.value) })}
           onBlur={(e) => buscarCNPJ(e.target.value)}
-          placeholder="00.000.000/0000-00"
+          placeholder=""
           maxLength={18}
           required
         />
