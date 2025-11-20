@@ -32,6 +32,7 @@ export interface FormState {
     profissao: string;
     rgTitularUrl: string;
     diplomaUrl: string;
+    procuracaoUrl: string;
     cnpj: string;
     dadosCnpjCorretos: boolean | null;
     dadosCnpj?: {
@@ -87,6 +88,7 @@ export const initialFormState: FormState = {
     profissao: "",
     rgTitularUrl: "",
     diplomaUrl: "",
+    procuracaoUrl: "",
     cnpj: "",
     dadosCnpjCorretos: null,
   },

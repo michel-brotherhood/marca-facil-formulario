@@ -230,72 +230,49 @@ export const TitularPF = ({ formData, updateFormData }: TitularPFProps) => {
       </div>
 
       <div>
-        <Label htmlFor="rgTitular">Upload do RG do Titular (opcional)</Label>
-        <div className="mt-2 flex items-center justify-center border-2 border-dashed border-border rounded-lg p-6 hover:border-primary transition-colors cursor-pointer">
-          <label htmlFor="rgTitular" className="cursor-pointer text-center">
-            <div className="text-4xl mb-2">📄</div>
-            <p className="text-sm text-muted-foreground">Clique para fazer upload do RG</p>
-          </label>
-          <Input
-            id="rgTitular"
-            type="file"
-            accept=".pdf,.jpg,.jpeg,.png"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file && file.size > 5 * 1024 * 1024) {
-                toast.error("O arquivo deve ter no máximo 5MB");
-                e.target.value = "";
-                return;
-              }
-              updateFormData({ rgTitularUrl: file?.name || "" });
-            }}
-            className="hidden"
-          />
-        </div>
+        <FileUpload
+          label="Upload do RG do Titular (opcional)"
+          tipoArquivo="rg_titular"
+          maxSize={5}
+          acceptedTypes=".pdf,.jpg,.jpeg,.png"
+          onUploadSuccess={(result) => {
+            if (result.fileId) {
+              updateFormData({ rgTitularUrl: result.fileName || "" });
+            }
+          }}
+          currentFile={formData.rgTitularUrl}
+        />
       </div>
 
       <div>
-        <Label htmlFor="diploma">
-          Upload do Diploma/Prova de Qualificação Profissional (opcional)
-        </Label>
-        <div className="mt-2 flex items-center justify-center border-2 border-dashed border-border rounded-lg p-6 hover:border-primary transition-colors cursor-pointer">
-          <label htmlFor="diploma" className="cursor-pointer text-center">
-            <div className="text-4xl mb-2">🎓</div>
-            <p className="text-sm text-muted-foreground">Clique para fazer upload do diploma</p>
-          </label>
-          <Input
-            id="diploma"
-            type="file"
-            accept=".pdf,.jpg,.jpeg,.png"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file && file.size > 5 * 1024 * 1024) {
-                toast.error("O arquivo deve ter no máximo 5MB");
-                e.target.value = "";
-                return;
-              }
-              updateFormData({ diplomaUrl: file?.name || "" });
-            }}
-            className="hidden"
-          />
-        </div>
+        <FileUpload
+          label="Upload do Diploma/Prova de Qualificação Profissional (opcional)"
+          tipoArquivo="diploma"
+          maxSize={5}
+          acceptedTypes=".pdf,.jpg,.jpeg,.png"
+          onUploadSuccess={(result) => {
+            if (result.fileId) {
+              updateFormData({ diplomaUrl: result.fileName || "" });
+            }
+          }}
+          currentFile={formData.diplomaUrl}
+        />
       </div>
 
       {formData.representante === "procurador" && (
         <div>
-          <Label htmlFor="procuracaoPF">Upload da Procuração (opcional)</Label>
-          <div className="mt-2 flex items-center justify-center border-2 border-dashed border-border rounded-lg p-6 hover:border-primary transition-colors cursor-pointer">
-            <label htmlFor="procuracaoPF" className="cursor-pointer text-center">
-              <div className="text-4xl mb-2">📋</div>
-              <p className="text-sm text-muted-foreground">Clique para fazer upload da procuração</p>
-            </label>
-            <Input
-              id="procuracaoPF"
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png"
-              className="hidden"
-            />
-          </div>
+          <FileUpload
+            label="Upload da Procuração (opcional)"
+            tipoArquivo="procuracao_pf"
+            maxSize={5}
+            acceptedTypes=".pdf,.jpg,.jpeg,.png"
+            onUploadSuccess={(result) => {
+              if (result.fileId) {
+                updateFormData({ procuracaoUrl: result.fileName || "" });
+              }
+            }}
+            currentFile={formData.procuracaoUrl}
+          />
         </div>
       )}
     </div>

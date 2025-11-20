@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
+import { FileUpload } from "@/components/FileUpload";
 
 interface Etapa3Props {
   formData: FormState["marca"];
@@ -97,8 +98,6 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
 
         {formData.possuiLogo === true && (
           <div>
-            <Label htmlFor="logo">Upload do Logotipo</Label>
-            
             <Card className="mt-4 bg-muted/50">
               <CardContent className="pt-6">
                 <h4 className="font-semibold mb-3">
@@ -119,28 +118,19 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
                   </p>
                 </div>
 
-                <div className="flex items-center justify-center border-2 border-dashed border-border rounded-lg p-8 hover:border-primary transition-colors cursor-pointer">
-                  <label htmlFor="logo" className="cursor-pointer text-center">
-                    <div className="text-5xl mb-2">🎨</div>
-                    <p className="text-sm text-muted-foreground">Clique para fazer upload do logotipo</p>
-                  </label>
-                  <Input
-                    id="logo"
-                    type="file"
-                    accept=".jpg,.jpeg"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file && file.size > 2 * 1024 * 1024) {
-                        toast.error("O arquivo deve ter no máximo 2MB");
-                        e.target.value = "";
-                        return;
-                      }
-                      updateFormData({ logoUrl: file?.name || "" });
-                    }}
-                    required
-                    className="hidden"
-                  />
-                </div>
+                <FileUpload
+                  label=""
+                  tipoArquivo="logo"
+                  maxSize={2}
+                  acceptedTypes=".jpg,.jpeg"
+                  onUploadSuccess={(result) => {
+                    if (result.fileId) {
+                      updateFormData({ logoUrl: result.fileName || "" });
+                    }
+                  }}
+                  currentFile={formData.logoUrl}
+                  showPreview={true}
+                />
               </CardContent>
             </Card>
           </div>

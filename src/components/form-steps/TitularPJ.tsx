@@ -169,19 +169,18 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
 
           {formData.representante === "procurador" && (
             <div>
-              <Label htmlFor="procuracaoPJ">Upload da Procuração (opcional)</Label>
-              <div className="mt-2 flex items-center justify-center border-2 border-dashed border-border rounded-lg p-6 hover:border-primary transition-colors cursor-pointer">
-                <label htmlFor="procuracaoPJ" className="cursor-pointer text-center">
-                  <div className="text-4xl mb-2">📋</div>
-                  <p className="text-sm text-muted-foreground">Clique para fazer upload da procuração</p>
-                </label>
-                <Input
-                  id="procuracaoPJ"
-                  type="file"
-                  accept=".pdf,.jpg,.jpeg,.png"
-                  className="hidden"
-                />
-              </div>
+              <FileUpload
+                label="Upload da Procuração (opcional)"
+                tipoArquivo="procuracao_pj"
+                maxSize={5}
+                acceptedTypes=".pdf,.jpg,.jpeg,.png"
+                onUploadSuccess={(result) => {
+                  if (result.fileId) {
+                    updateFormData({ procuracaoUrl: result.fileName || "" });
+                  }
+                }}
+                currentFile={formData.procuracaoUrl}
+              />
             </div>
           )}
         </>
