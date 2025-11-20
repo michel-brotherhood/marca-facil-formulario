@@ -279,7 +279,7 @@ const Index = () => {
     return (
       <div className="min-h-screen bg-background">
         <Header currentStep={5} totalSteps={5} />
-        <div className="py-8 md:py-12 px-4 sm:px-6 lg:px-8">
+        <div className="py-6 sm:py-8 md:py-12 px-3 sm:px-4 lg:px-8">
           <Etapa5_Obrigado />
         </div>
         <Footer />
@@ -291,21 +291,21 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header currentStep={formState.currentStep} totalSteps={5} />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 md:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           <div className="lg:col-span-2">
             <Card className="shadow-xl border-0 transition-all duration-300">
-              <CardContent className="p-4 sm:p-6 md:p-8">
+              <CardContent className="p-4 sm:p-5 md:p-8">
                 {renderStep()}
               </CardContent>
             </Card>
 
-            <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 mt-6 md:mt-8 animate-fade-in">
+            <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 mt-4 sm:mt-6 md:mt-8 animate-fade-in">
               {formState.currentStep > 1 && (
                 <Button
                   variant="outline"
                   onClick={prevStep}
-                  className="w-full sm:w-auto order-2 sm:order-1 transition-all duration-200 hover:scale-105"
+                  className="w-full sm:w-auto order-2 sm:order-1 transition-all duration-200 hover:scale-105 text-white border-white hover:bg-white hover:text-primary"
                   size="lg"
                 >
                   <ArrowLeft className="mr-2 h-4 w-4" />
