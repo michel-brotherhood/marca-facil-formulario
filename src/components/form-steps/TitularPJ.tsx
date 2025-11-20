@@ -6,7 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cnpjMask } from "@/utils/masks";
 import { validateCNPJ } from "@/utils/validators";
 import { toast } from "sonner";
-import { FileCheck } from "lucide-react";
+import { FileCheck, CheckCircle2, XCircle } from "lucide-react";
+import { useState } from "react";
 
 interface TitularPJProps {
   formData: FormState["titular"];
@@ -14,12 +15,37 @@ interface TitularPJProps {
 }
 
 export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
+  const [cnpjValido, setCnpjValido] = useState<boolean | null>(null);
+  const handleCNPJValidation = (cnpj: string) => {
+    const cleanCNPJ = cnpj.replace(/\D/g, "");
+    
+    if (cleanCNPJ.length === 0) {
+      setCnpjValido(null);
+      return;
+    }
+    
+    if (cleanCNPJ.length === 14) {
+      const isValid = validateCNPJ(cnpj);
+      setCnpjValido(isValid);
+      
+      if (!isValid) {
+        toast.error("CNPJ inválido. Verifique o número digitado.");
+      }
+    } else {
+      setCnpjValido(false);
+    }
+  };
+
   const buscarCNPJ = async (cnpj: string) => {
     const cleanCNPJ = cnpj.replace(/\D/g, "");
     
     if (!validateCNPJ(cnpj)) {
+      setCnpjValido(false);
+      toast.error("CNPJ inválido. Verifique o número digitado.");
       return;
     }
+    
+    setCnpjValido(true);
 
     toast.loading("Buscando dados do CNPJ...");
 
@@ -64,15 +90,39 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
     <div className="space-y-4">
       <div>
         <Label htmlFor="cnpj">CNPJ *</Label>
-        <Input
-          id="cnpj"
-          value={formData.cnpj}
-          onChange={(e) => updateFormData({ cnpj: cnpjMask(e.target.value) })}
-          onBlur={(e) => buscarCNPJ(e.target.value)}
-          placeholder=""
-          maxLength={18}
-          required
-        />
+        <div className="relative">
+          <Input
+            id="cnpj"
+            value={formData.cnpj}
+            onChange={(e) => {
+              updateFormData({ cnpj: cnpjMask(e.target.value) });
+              handleCNPJValidation(e.target.value);
+            }}
+            onBlur={(e) => buscarCNPJ(e.target.value)}
+            placeholder="00.000.000/0000-00"
+            maxLength={18}
+            required
+            className={
+              cnpjValido === null
+                ? ""
+                : cnpjValido
+                ? "border-green-500 pr-10"
+                : "border-red-500 pr-10"
+            }
+          />
+          {cnpjValido !== null && (
+            <div className="absolute right-3 top-1/2 -translate-y-1/2">
+              {cnpjValido ? (
+                <CheckCircle2 className="w-5 h-5 text-green-500" />
+              ) : (
+                <XCircle className="w-5 h-5 text-red-500" />
+              )}
+            </div>
+          )}
+        </div>
+        {cnpjValido === false && (
+          <p className="text-sm text-red-600 mt-1">CNPJ inválido</p>
+        )}
       </div>
 
       {formData.dadosCnpj && (
