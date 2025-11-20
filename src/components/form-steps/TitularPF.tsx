@@ -364,7 +364,10 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
               }
               
               toast.success(`Arquivo ${file.name} selecionado`);
-              updateFormData({ rgTitularUrl: file.name });
+              updateFormData({ 
+                rgTitularUrl: file.name,
+                rgTitularFile: file
+              });
             }}
             className="hidden"
           />
@@ -413,7 +416,10 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
               }
               
               toast.success(`Arquivo ${file.name} selecionado`);
-              updateFormData({ diplomaUrl: file.name });
+              updateFormData({ 
+                diplomaUrl: file.name,
+                diplomaFile: file
+              });
             }}
             className="hidden"
           />
@@ -463,7 +469,10 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
                 }
                 
                 toast.success(`Arquivo ${file.name} selecionado`);
-                updateFormData({ procuracaoUrl: file.name });
+                updateFormData({ 
+                  procuracaoUrl: file.name,
+                  procuracaoFile: file
+                });
               }}
               className="hidden"
             />

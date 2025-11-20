@@ -1,91 +1,76 @@
 import { supabase } from "@/integrations/supabase/client";
 
 export interface FileUploadResult {
-  success: boolean;
-  fileId?: string;
-  fileName?: string;
-  fileUrl?: string;
-  error?: string;
+  url: string;
+  path: string;
+  name: string;
 }
 
+/**
+ * Faz upload de um arquivo para o Supabase Storage
+ * @param file - Arquivo a ser enviado
+ * @param folder - Pasta dentro do bucket (ex: "rg", "diploma", "logo")
+ * @returns Informações do arquivo enviado ou null em caso de erro
+ */
 export const uploadFile = async (
   file: File,
-  tipoArquivo: string,
-  formularioId?: string
-): Promise<FileUploadResult> => {
+  folder: string
+): Promise<FileUploadResult | null> => {
   try {
-    console.log('📤 Iniciando upload:', { 
-      fileName: file.name, 
-      size: file.size, 
-      type: file.type,
-      tipoArquivo 
-    });
-
-    // Validar tamanho do arquivo (5MB para documentos, 2MB para imagens)
-    const maxSize = tipoArquivo === "logo" ? 2 * 1024 * 1024 : 5 * 1024 * 1024;
-    if (file.size > maxSize) {
-      console.error('❌ Arquivo muito grande:', file.size, 'max:', maxSize);
-      return {
-        success: false,
-        error: `Arquivo muito grande. Tamanho máximo: ${maxSize / (1024 * 1024)}MB`
-      };
-    }
-
     // Gerar nome único para o arquivo
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
-    const filePath = `${tipoArquivo}/${fileName}`;
-    console.log('📁 Caminho do arquivo:', filePath);
+    const timestamp = Date.now();
+    const randomString = Math.random().toString(36).substring(2, 15);
+    const fileExtension = file.name.split('.').pop();
+    const fileName = `${timestamp}_${randomString}.${fileExtension}`;
+    const filePath = `${folder}/${fileName}`;
 
-    // Upload para o storage
-    const { error: uploadError } = await supabase.storage
-      .from('formulario-arquivos')
-      .upload(filePath, file);
+    console.log(`📤 Iniciando upload: ${file.name} -> ${filePath}`);
 
-    if (uploadError) {
-      console.error("❌ Erro no upload ao storage:", uploadError);
-      return { success: false, error: uploadError.message };
+    // Fazer upload
+    const { data, error } = await supabase.storage
+      .from('form-documents')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
+
+    if (error) {
+      console.error('❌ Erro no upload:', error);
+      return null;
     }
 
-    console.log('✅ Upload ao storage bem-sucedido');
+    console.log('✅ Upload concluído:', data);
 
-    // Obter URL pública do arquivo
-    const { data: urlData } = supabase.storage
-      .from('formulario-arquivos')
+    // Obter URL pública
+    const { data: { publicUrl } } = supabase.storage
+      .from('form-documents')
       .getPublicUrl(filePath);
-    
-    console.log('🔗 URL pública gerada:', urlData.publicUrl);
 
-    // Registrar arquivo no banco de dados
-    console.log('💾 Salvando metadados no banco...');
-    const { data: arquivoData, error: dbError } = await supabase
-      .from('arquivos')
-      .insert({
-        formulario_id: formularioId || null,
-        tipo_arquivo: tipoArquivo,
-        nome_original: file.name,
-        tamanho: file.size,
-        mime_type: file.type,
-        storage_path: filePath
-      })
-      .select()
-      .single();
-
-    if (dbError) {
-      console.error("❌ Erro ao salvar no banco:", dbError);
-      return { success: false, error: dbError.message };
-    }
-
-    console.log('✅ Upload completo! ID do arquivo:', arquivoData.id);
+    console.log('🔗 URL pública:', publicUrl);
 
     return {
-      success: true,
-      fileId: arquivoData.id,
-      fileName: file.name,
-      fileUrl: urlData.publicUrl
+      url: publicUrl,
+      path: filePath,
+      name: file.name
     };
-  } catch (error: any) {
-    console.error("❌ Erro geral no upload:", error);
-    return { success: false, error: error.message || 'Erro desconhecido' };
+  } catch (error) {
+    console.error('❌ Exceção durante upload:', error);
+    return null;
   }
+};
+
+/**
+ * Faz upload de múltiplos arquivos
+ */
+export const uploadFiles = async (
+  files: { file: File; folder: string }[]
+): Promise<FileUploadResult[]> => {
+  const uploadPromises = files.map(({ file, folder }) => 
+    uploadFile(file, folder)
+  );
+  
+  const results = await Promise.all(uploadPromises);
+  
+  // Filtrar resultados nulos
+  return results.filter((result): result is FileUploadResult => result !== null);
 };

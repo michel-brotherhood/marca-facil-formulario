@@ -55,6 +55,39 @@ export type Database = {
           },
         ]
       }
+      form_submissions: {
+        Row: {
+          arquivos_urls: Json | null
+          cliente_cpf: string
+          cliente_email: string
+          cliente_nome: string
+          created_at: string | null
+          form_data: Json
+          id: string
+          marca_nome: string
+        }
+        Insert: {
+          arquivos_urls?: Json | null
+          cliente_cpf: string
+          cliente_email: string
+          cliente_nome: string
+          created_at?: string | null
+          form_data: Json
+          id?: string
+          marca_nome: string
+        }
+        Update: {
+          arquivos_urls?: Json | null
+          cliente_cpf?: string
+          cliente_email?: string
+          cliente_nome?: string
+          created_at?: string | null
+          form_data?: Json
+          id?: string
+          marca_nome?: string
+        }
+        Relationships: []
+      }
       formularios: {
         Row: {
           created_at: string

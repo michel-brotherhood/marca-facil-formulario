@@ -15,6 +15,7 @@ import { validateCPF, validateEmail, validateCEP, validateCNPJ } from "@/utils/v
 import { toast } from "sonner";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { uploadFiles } from "@/utils/fileUpload";
 
 const Index = () => {
   const [formState, setFormState] = useState<FormState>(initialFormState);
@@ -240,19 +241,65 @@ const Index = () => {
     if (!validateStep(4)) return;
 
     try {
-      console.log("Enviando dados do formulário...");
+      console.log("Iniciando processamento da submissão...");
+      toast.loading("Enviando arquivos...");
       
-      // Preparar dados para envio
+      // Coletar todos os arquivos para upload
+      const filesToUpload: { file: File; folder: string }[] = [];
+      
+      if (formState.cliente.rgClienteFile) {
+        filesToUpload.push({ file: formState.cliente.rgClienteFile, folder: 'rg-cliente' });
+      }
+      if (formState.titular.rgTitularFile) {
+        filesToUpload.push({ file: formState.titular.rgTitularFile, folder: 'rg-titular' });
+      }
+      if (formState.titular.diplomaFile) {
+        filesToUpload.push({ file: formState.titular.diplomaFile, folder: 'diploma' });
+      }
+      if (formState.titular.procuracaoFile) {
+        filesToUpload.push({ file: formState.titular.procuracaoFile, folder: 'procuracao' });
+      }
+      if (formState.marca.logoFile) {
+        filesToUpload.push({ file: formState.marca.logoFile, folder: 'logo' });
+      }
+
+      console.log(`Fazendo upload de ${filesToUpload.length} arquivo(s)...`);
+      
+      // Fazer upload de todos os arquivos
+      const uploadResults = await uploadFiles(filesToUpload);
+      
+      console.log(`Upload concluído. ${uploadResults.length} arquivo(s) enviado(s).`);
+      
+      // Preparar dados para envio com URLs dos arquivos
       const dataToSend = {
-        cliente: formState.cliente,
-        titular: formState.titular,
-        marca: formState.marca,
+        cliente: {
+          ...formState.cliente,
+          rgClienteFile: undefined, // Remover File object
+        },
+        titular: {
+          ...formState.titular,
+          rgTitularFile: undefined,
+          diplomaFile: undefined,
+          procuracaoFile: undefined,
+        },
+        marca: {
+          ...formState.marca,
+          logoFile: undefined,
+        },
+        arquivos: uploadResults, // Adicionar URLs dos arquivos
       };
 
+      toast.dismiss();
+      toast.loading("Enviando solicitação...");
+
+      console.log("Chamando edge function para enviar email...");
+      
       // Chamar edge function para enviar email
       const { data, error } = await supabase.functions.invoke('send-form-email', {
         body: dataToSend
       });
+
+      toast.dismiss();
 
       if (error) {
         console.error("Erro ao enviar email:", error);
@@ -266,6 +313,7 @@ const Index = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
       console.error("Erro ao processar solicitação:", error);
+      toast.dismiss();
       toast.error("Erro ao enviar solicitação. Tente novamente.");
     }
   };
