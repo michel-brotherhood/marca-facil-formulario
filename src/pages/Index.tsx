@@ -219,9 +219,11 @@ const Index = () => {
     return (
       <div className="min-h-screen bg-background">
         <Header currentStep={5} totalSteps={5} />
-        <div className="py-12 px-4">
+        <div className="h-16 sm:h-20" />
+        <div className="py-8 md:py-12 px-4 sm:px-6 lg:px-8">
           <Etapa5_Obrigado />
         </div>
+        <Footer />
       </div>
     );
   }
@@ -229,39 +231,49 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header currentStep={formState.currentStep} totalSteps={5} />
+      {/* Spacer for fixed header */}
+      <div className="h-16 sm:h-20" />
       
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           <div className="lg:col-span-2">
-            <Card>
-              <CardContent className="pt-8 pb-6">
-                <div className="lg:hidden mb-6">
-                  <ProgressBar currentStep={formState.currentStep} totalSteps={5} />
-                </div>
-
-                <div className="mt-4">{renderStep()}</div>
-
-                <div className="flex justify-between mt-8 pt-6 border-t">
-                  {formState.currentStep > 1 && formState.currentStep < 5 && (
-                    <Button onClick={prevStep} variant="outline" className="gap-2">
-                      Voltar
-                    </Button>
-                  )}
-
-                  {formState.currentStep < 4 && (
-                    <Button onClick={nextStep} className="ml-auto gap-2">
-                      Próximo
-                    </Button>
-                  )}
-
-                  {formState.currentStep === 4 && (
-                    <Button onClick={handleSubmit} className="ml-auto gap-2">
-                      Enviar Solicitação
-                    </Button>
-                  )}
-                </div>
+            <Card className="shadow-xl border-0">
+              <CardContent className="p-4 sm:p-6 md:p-8">
+                {renderStep()}
               </CardContent>
             </Card>
+
+            <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 mt-6 md:mt-8">
+              <Button
+                variant="outline"
+                onClick={prevStep}
+                disabled={formState.currentStep === 1}
+                className="w-full sm:w-auto order-2 sm:order-1"
+                size="lg"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Voltar
+              </Button>
+
+              {formState.currentStep < 4 ? (
+                <Button 
+                  onClick={nextStep}
+                  className="w-full sm:w-auto order-1 sm:order-2"
+                  size="lg"
+                >
+                  Próximo
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              ) : (
+                <Button 
+                  onClick={handleSubmit}
+                  className="w-full sm:w-auto order-1 sm:order-2"
+                  size="lg"
+                >
+                  Finalizar Pedido
+                </Button>
+              )}
+            </div>
           </div>
 
           <div className="hidden lg:block">
