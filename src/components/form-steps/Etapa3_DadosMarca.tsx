@@ -41,7 +41,7 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
                   setNomeValido(false);
                 }
               }}
-              placeholder="Digite o nome da marca"
+              placeholder="Ex: Minha Marca, SuperTech, Sabor & Cia..."
               required
               className={
                 nomeValido === null
