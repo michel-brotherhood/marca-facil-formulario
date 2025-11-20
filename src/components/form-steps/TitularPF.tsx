@@ -66,10 +66,32 @@ export const TitularPF = ({ formData, updateFormData }: TitularPFProps) => {
             </Label>
           </div>
         </RadioGroup>
-        <p className="mt-2 text-sm font-medium text-orange-600">
-          ⚠️ Se você é sócio de empresa neste mesmo segmento, escolha a opção Pessoa Jurídica.
-        </p>
+        {formData.possuiSociedade === true && (
+          <p className="mt-2 text-sm font-medium text-orange-600">
+            ⚠️ Se você é sócio de empresa neste mesmo segmento, escolha a opção Pessoa Jurídica.
+          </p>
+        )}
       </div>
+
+      {/* Mostrar campos apenas se possuiSociedade for false */}
+      {formData.possuiSociedade === false && (
+        <>
+          <div className="bg-primary/5 border-l-4 border-primary p-4 rounded">
+            <p className="text-sm font-medium">
+              📅 Está em dúvidas sobre como registrar a sua marca?
+            </p>
+            <p className="text-sm text-muted-foreground mt-1">
+              Precisa de ajuda para preencher o nosso formulário?
+            </p>
+            <a
+              href="https://calendly.com/admin-marcafacil/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-3 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+            >
+              ☕ Agendar Videoconferência Gratuita (30 min)
+            </a>
+          </div>
 
       <div>
         <Label className="mb-3 block">
@@ -348,6 +370,8 @@ export const TitularPF = ({ formData, updateFormData }: TitularPFProps) => {
             </div>
           )}
         </div>
+      )}
+        </>
       )}
     </div>
   );
