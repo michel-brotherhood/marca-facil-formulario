@@ -229,7 +229,21 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
             className="mt-2"
           />
           {formData.rgClienteUrl && (
-            <p className="text-sm text-green-600 mt-1">✓ {formData.rgClienteUrl}</p>
+            <div className="flex items-center justify-between mt-1 p-2 bg-muted/50 rounded">
+              <p className="text-sm text-green-600">✓ {formData.rgClienteUrl}</p>
+              <button
+                type="button"
+                onClick={() => {
+                  updateFormData({ rgClienteUrl: "" });
+                  const input = document.getElementById("rgCliente") as HTMLInputElement;
+                  if (input) input.value = "";
+                  toast.success("Arquivo removido");
+                }}
+                className="text-red-600 hover:text-red-700 font-bold"
+              >
+                ✕
+              </button>
+            </div>
           )}
         </div>
       </div>
