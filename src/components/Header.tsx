@@ -7,7 +7,7 @@ interface HeaderProps {
 
 export const Header = ({ currentStep, totalSteps }: HeaderProps) => {
   return (
-    <header className="fixed top-0 left-0 right-0 bg-[#7c3aed] border-b border-[#6d28d9] z-50 shadow-lg backdrop-blur-sm">
+    <header className="bg-[#7c3aed] border-b border-[#6d28d9] shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center flex-shrink-0">
