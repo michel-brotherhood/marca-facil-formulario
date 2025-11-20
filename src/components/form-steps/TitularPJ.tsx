@@ -190,39 +190,44 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
           )}
 
           {formData.dadosCnpjCorretos === true && (
-            <div>
-              <Label className="mb-3 block">
-                Você é o Responsável Legal deste CNPJ? *
-              </Label>
-              <RadioGroup
-                value={formData.representante}
-                onValueChange={(value: "sim" | "nao" | "procurador") =>
-                  updateFormData({ representante: value })
-                }
-              >
-                <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
-                  <RadioGroupItem value="sim" id="responsavel-sim" />
-                  <Label htmlFor="responsavel-sim" className="font-normal cursor-pointer">
-                    SIM
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
-                  <RadioGroupItem value="nao" id="responsavel-nao" />
-                  <Label htmlFor="responsavel-nao" className="font-normal cursor-pointer">
-                    NÃO
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
-                  <RadioGroupItem value="procurador" id="responsavel-procurador" />
-                  <Label htmlFor="responsavel-procurador" className="font-normal cursor-pointer">
-                    PROCURADOR
-                  </Label>
-                </div>
-              </RadioGroup>
-              <p className="mt-2 text-sm font-medium text-orange-600">
-                ⚠️ Apenas o Representante Legal ou procurador devidamente constituído do Titular podem contratar nossos serviços.
-              </p>
-            </div>
+            <>
+              <div>
+                <Label className="mb-3 block">
+                  Você é o Responsável Legal deste CNPJ? *
+                </Label>
+                <RadioGroup
+                  value={formData.representante}
+                  onValueChange={(value: "sim" | "nao" | "procurador") =>
+                    updateFormData({ representante: value })
+                  }
+                >
+                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+                    <RadioGroupItem value="sim" id="responsavel-sim" />
+                    <Label htmlFor="responsavel-sim" className="font-normal cursor-pointer">
+                      SIM
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+                    <RadioGroupItem value="nao" id="responsavel-nao" />
+                    <Label htmlFor="responsavel-nao" className="font-normal cursor-pointer">
+                      NÃO
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+                    <RadioGroupItem value="procurador" id="responsavel-procurador" />
+                    <Label htmlFor="responsavel-procurador" className="font-normal cursor-pointer">
+                      PROCURADOR
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              {formData.representante === "nao" && (
+                <p className="text-sm font-medium text-orange-600">
+                  ⚠️ Apenas o Representante Legal ou procurador devidamente constituído do Titular podem contratar nossos serviços.
+                </p>
+              )}
+            </>
           )}
 
           {formData.representante === "procurador" && (
