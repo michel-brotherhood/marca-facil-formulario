@@ -41,19 +41,19 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
           >
             <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="produtos" id="produtos" />
-              <Label htmlFor="produtos" className="font-normal cursor-pointer">
+              <Label htmlFor="produtos" className="font-normal cursor-pointer flex-1">
                 Produzir e/ou Vender PRODUTOS
               </Label>
             </div>
             <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="servicos" id="servicos" />
-              <Label htmlFor="servicos" className="font-normal cursor-pointer">
+              <Label htmlFor="servicos" className="font-normal cursor-pointer flex-1">
                 Prestação de SERVIÇOS
               </Label>
             </div>
             <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="outros" id="outros" />
-              <Label htmlFor="outros" className="font-normal cursor-pointer">
+              <Label htmlFor="outros" className="font-normal cursor-pointer flex-1">
                 OUTROS
               </Label>
             </div>
@@ -83,13 +83,13 @@ export const Etapa3_DadosMarca = ({ formData, updateFormData }: Etapa3Props) => 
           >
             <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="true" id="logo-sim" />
-              <Label htmlFor="logo-sim" className="font-normal cursor-pointer">
+              <Label htmlFor="logo-sim" className="font-normal cursor-pointer flex-1">
                 SIM
               </Label>
             </div>
             <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="false" id="logo-nao" />
-              <Label htmlFor="logo-nao" className="font-normal cursor-pointer">
+              <Label htmlFor="logo-nao" className="font-normal cursor-pointer flex-1">
                 NÃO
               </Label>
             </div>

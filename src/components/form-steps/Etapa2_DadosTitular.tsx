@@ -28,13 +28,13 @@ export const Etapa2_DadosTitular = ({ formData, updateFormData, clienteData }: E
         >
           <div className="flex items-center space-x-3 p-4 border-2 rounded-xl hover:bg-muted/50 hover:border-primary/50 cursor-pointer transition-all">
             <RadioGroupItem value="pf" id="pf" />
-            <Label htmlFor="pf" className="font-normal cursor-pointer flex items-center gap-2 text-base">
+            <Label htmlFor="pf" className="font-normal cursor-pointer flex items-center gap-2 text-base flex-1">
               👤 Pessoa Física
             </Label>
           </div>
           <div className="flex items-center space-x-3 p-4 border-2 rounded-xl hover:bg-muted/50 hover:border-primary/50 cursor-pointer transition-all">
             <RadioGroupItem value="pj" id="pj" />
-            <Label htmlFor="pj" className="font-normal cursor-pointer flex items-center gap-2 text-base">
+            <Label htmlFor="pj" className="font-normal cursor-pointer flex items-center gap-2 text-base flex-1">
               🏢 Pessoa Jurídica
             </Label>
           </div>

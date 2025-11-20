@@ -242,13 +242,13 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
           >
             <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="whatsapp" id="whatsapp" />
-              <Label htmlFor="whatsapp" className="font-normal cursor-pointer flex items-center gap-2">
+              <Label htmlFor="whatsapp" className="font-normal cursor-pointer flex items-center gap-2 flex-1">
                 📱 WhatsApp
               </Label>
             </div>
             <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
               <RadioGroupItem value="email" id="email-pref" />
-              <Label htmlFor="email-pref" className="font-normal cursor-pointer flex items-center gap-2">
+              <Label htmlFor="email-pref" className="font-normal cursor-pointer flex items-center gap-2 flex-1">
                 ✉️ E-mail
               </Label>
             </div>
