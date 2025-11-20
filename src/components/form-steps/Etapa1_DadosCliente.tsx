@@ -209,27 +209,28 @@ export const Etapa1_DadosCliente = ({ formData, updateFormData }: Etapa1Props) =
 
         <div>
           <Label htmlFor="rgCliente">Upload do RG (opcional)</Label>
-          <div className="mt-2 flex items-center justify-center border-2 border-dashed border-border rounded-lg p-6 hover:border-primary transition-colors cursor-pointer">
-            <label htmlFor="rgCliente" className="cursor-pointer text-center">
-              <div className="text-4xl mb-2">📄</div>
-              <p className="text-sm text-muted-foreground">Clique para fazer upload do RG</p>
-            </label>
-            <Input
-              id="rgCliente"
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file && file.size > 5 * 1024 * 1024) {
-                  toast.error("O arquivo deve ter no máximo 5MB");
-                  e.target.value = "";
-                  return;
-                }
-                updateFormData({ rgClienteUrl: file?.name || "" });
-              }}
-              className="hidden"
-            />
-          </div>
+          <Input
+            id="rgCliente"
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              
+              if (file.size > 5 * 1024 * 1024) {
+                toast.error("O arquivo deve ter no máximo 5MB");
+                e.target.value = "";
+                return;
+              }
+              
+              toast.success(`Arquivo ${file.name} selecionado`);
+              updateFormData({ rgClienteUrl: file.name });
+            }}
+            className="mt-2"
+          />
+          {formData.rgClienteUrl && (
+            <p className="text-sm text-green-600 mt-1">✓ {formData.rgClienteUrl}</p>
+          )}
         </div>
       </div>
     </div>
