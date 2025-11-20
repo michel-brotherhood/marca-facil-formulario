@@ -120,13 +120,13 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
         >
           <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
             <RadioGroupItem value="true" id="sociedade-sim" />
-            <Label htmlFor="sociedade-sim" className="font-normal cursor-pointer">
+            <Label htmlFor="sociedade-sim" className="font-normal cursor-pointer flex-1">
               SIM
             </Label>
           </div>
           <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
             <RadioGroupItem value="false" id="sociedade-nao" />
-            <Label htmlFor="sociedade-nao" className="font-normal cursor-pointer">
+            <Label htmlFor="sociedade-nao" className="font-normal cursor-pointer flex-1">
               NÃO
             </Label>
           </div>
@@ -170,13 +170,13 @@ export const TitularPF = ({ formData, updateFormData, clienteData }: TitularPFPr
         >
           <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
             <RadioGroupItem value="titular" id="rep-titular" />
-            <Label htmlFor="rep-titular" className="font-normal cursor-pointer">
+            <Label htmlFor="rep-titular" className="font-normal cursor-pointer flex-1">
               TITULAR
             </Label>
           </div>
           <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
             <RadioGroupItem value="procurador" id="rep-procurador" />
-            <Label htmlFor="rep-procurador" className="font-normal cursor-pointer">
+            <Label htmlFor="rep-procurador" className="font-normal cursor-pointer flex-1">
               PROCURADOR
             </Label>
           </div>

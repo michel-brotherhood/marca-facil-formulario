@@ -190,7 +190,7 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
             >
               <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
                 <RadioGroupItem value="true" id="dados-corretos-sim" />
-                <Label htmlFor="dados-corretos-sim" className="font-normal cursor-pointer">
+                <Label htmlFor="dados-corretos-sim" className="font-normal cursor-pointer flex-1">
                   SIM
                 </Label>
               </div>
@@ -198,7 +198,7 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
                 formData.dadosCnpjCorretos === false ? 'border-2 border-primary' : 'border'
               }`}>
                 <RadioGroupItem value="false" id="dados-corretos-nao" />
-                <Label htmlFor="dados-corretos-nao" className="font-normal cursor-pointer">
+                <Label htmlFor="dados-corretos-nao" className="font-normal cursor-pointer flex-1">
                   NÃO
                 </Label>
               </div>
@@ -253,19 +253,19 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
                 >
                   <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
                     <RadioGroupItem value="sim" id="responsavel-sim" />
-                    <Label htmlFor="responsavel-sim" className="font-normal cursor-pointer">
+                    <Label htmlFor="responsavel-sim" className="font-normal cursor-pointer flex-1">
                       SIM
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
                     <RadioGroupItem value="nao" id="responsavel-nao" />
-                    <Label htmlFor="responsavel-nao" className="font-normal cursor-pointer">
+                    <Label htmlFor="responsavel-nao" className="font-normal cursor-pointer flex-1">
                       NÃO
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
                     <RadioGroupItem value="procurador" id="responsavel-procurador" />
-                    <Label htmlFor="responsavel-procurador" className="font-normal cursor-pointer">
+                    <Label htmlFor="responsavel-procurador" className="font-normal cursor-pointer flex-1">
                       PROCURADOR
                     </Label>
                   </div>
