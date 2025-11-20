@@ -41,6 +41,15 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
           nomeFantasia: data.nome_fantasia || "",
           cnae: data.cnae_fiscal_descricao || "",
           situacao: data.descricao_situacao_cadastral || "",
+          porte: data.porte || "",
+          naturezaJuridica: data.natureza_juridica || "",
+          logradouro: data.logradouro || "",
+          numero: data.numero || "",
+          complemento: data.complemento || "",
+          bairro: data.bairro || "",
+          municipio: data.municipio || "",
+          uf: data.uf || "",
+          cep: data.cep || "",
         },
       });
 
@@ -91,15 +100,23 @@ export const TitularPJ = ({ formData, updateFormData }: TitularPJProps) => {
                 )}
                 <div>
                   <p className="text-sm font-semibold text-green-800">Porte:</p>
-                  <p className="font-medium text-green-900">{formData.dadosCnpj.situacao}</p>
+                  <p className="font-medium text-green-900">{formData.dadosCnpj.porte}</p>
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-green-800">Natureza Jurídica:</p>
-                  <p className="font-medium text-green-900">Sociedade Empresária Limitada</p>
+                  <p className="font-medium text-green-900">{formData.dadosCnpj.naturezaJuridica}</p>
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-green-800">Endereço:</p>
-                  <p className="font-medium text-green-900">{formData.dadosCnpj.cnae}</p>
+                  <p className="font-medium text-green-900">
+                    {[
+                      formData.dadosCnpj.logradouro && `${formData.dadosCnpj.logradouro}${formData.dadosCnpj.numero ? ', ' + formData.dadosCnpj.numero : ''}`,
+                      formData.dadosCnpj.complemento,
+                      formData.dadosCnpj.bairro,
+                      formData.dadosCnpj.municipio && formData.dadosCnpj.uf ? `${formData.dadosCnpj.municipio}/${formData.dadosCnpj.uf}` : formData.dadosCnpj.municipio || formData.dadosCnpj.uf,
+                      formData.dadosCnpj.cep && `CEP: ${formData.dadosCnpj.cep}`
+                    ].filter(Boolean).join(' - ')}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-green-800">CNAE Principal:</p>
