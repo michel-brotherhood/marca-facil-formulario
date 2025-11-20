@@ -13,7 +13,7 @@ export const Etapa2_DadosTitular = ({ formData, updateFormData }: Etapa2Props) =
   return (
     <div className="space-y-6 md:space-y-8">
       <div className="space-y-1">
-        <h2 className="text-xl md:text-2xl font-bold text-foreground">Dados do Titular</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-foreground">Dados do Titular da Marca</h2>
         <p className="text-sm md:text-base text-muted-foreground">Informações sobre o titular da marca</p>
       </div>
 
@@ -40,13 +40,11 @@ export const Etapa2_DadosTitular = ({ formData, updateFormData }: Etapa2Props) =
         </RadioGroup>
       </div>
 
-      {formData.tipo === "pf" && (
-        <TitularPF formData={formData} updateFormData={updateFormData} />
-      )}
+      {/* Sempre mostrar campos de Pessoa Física */}
+      <TitularPF formData={formData} updateFormData={updateFormData} />
       
-      {formData.tipo === "pj" && (
-        <TitularPJ formData={formData} updateFormData={updateFormData} />
-      )}
+      {/* Sempre mostrar campos de Pessoa Jurídica */}
+      <TitularPJ formData={formData} updateFormData={updateFormData} />
     </div>
   );
 };
