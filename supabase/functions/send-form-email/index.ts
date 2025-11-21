@@ -179,17 +179,17 @@ const handler = async (req: Request): Promise<Response> => {
       </html>
     `;
 
-    console.log("Enviando email para atendimento@marcafacil.legal...");
+    console.log("Enviando email para admin@marcafacil.legal...");
 
     const emailResponse = await resend.emails.send({
       from: "Marca Fácil <onboarding@resend.dev>",
-      to: ["atendimento@marcafacil.legal"],
+      to: ["admin@marcafacil.legal"],
       subject: `📋 Nova Solicitação - ${formData.marca.nome} - ${formData.cliente.nomeCompleto}`,
       html: emailHtml,
       replyTo: formData.cliente.email,
     });
 
-    console.log("Email enviado com sucesso:", emailResponse);
+    console.log("✅ Email enviado com sucesso:", emailResponse);
 
     return new Response(
       JSON.stringify({ 
@@ -204,11 +204,18 @@ const handler = async (req: Request): Promise<Response> => {
       },
     });
   } catch (error: any) {
-    console.error("Erro ao enviar email:", error);
+    console.error("❌ Erro ao enviar email:", {
+      message: error.message,
+      statusCode: error.statusCode,
+      name: error.name,
+      stack: error.stack
+    });
     return new Response(
       JSON.stringify({ 
         success: false,
-        error: error.message 
+        error: error.message,
+        errorCode: error.statusCode || 500,
+        errorName: error.name
       }), {
       status: 500,
       headers: { 
