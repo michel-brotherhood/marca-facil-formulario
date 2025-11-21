@@ -182,7 +182,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Enviando email para admin@marcafacil.legal...");
 
     const emailResponse = await resend.emails.send({
-      from: "Marca Fácil <onboarding@resend.dev>",
+      from: "Marca Fácil <noreply@marcafacil.legal>",
       to: ["admin@marcafacil.legal"],
       subject: `📋 Nova Solicitação - ${formData.marca.nome} - ${formData.cliente.nomeCompleto}`,
       html: emailHtml,
