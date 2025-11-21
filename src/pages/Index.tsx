@@ -344,15 +344,7 @@ const Index = () => {
   };
 
   if (formState.currentStep === 5) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Header currentStep={5} totalSteps={5} />
-        <div className="py-6 sm:py-8 md:py-12 px-3 sm:px-4 lg:px-8">
-          <Etapa5_Obrigado />
-        </div>
-        <Footer />
-      </div>
-    );
+    return <Etapa5_Obrigado />;
   }
 
   return (
