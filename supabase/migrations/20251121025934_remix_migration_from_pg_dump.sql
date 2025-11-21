@@ -58,6 +58,22 @@ CREATE TABLE public.arquivos (
 
 
 --
+-- Name: form_submissions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.form_submissions (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    created_at timestamp with time zone DEFAULT now(),
+    cliente_nome text NOT NULL,
+    cliente_email text NOT NULL,
+    cliente_cpf text NOT NULL,
+    marca_nome text NOT NULL,
+    form_data jsonb NOT NULL,
+    arquivos_urls jsonb DEFAULT '[]'::jsonb
+);
+
+
+--
 -- Name: formularios; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -80,6 +96,14 @@ CREATE TABLE public.formularios (
 
 ALTER TABLE ONLY public.arquivos
     ADD CONSTRAINT arquivos_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: form_submissions form_submissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.form_submissions
+    ADD CONSTRAINT form_submissions_pkey PRIMARY KEY (id);
 
 
 --
@@ -113,6 +137,13 @@ CREATE POLICY "Permitir atualização pública de formulários" ON public.formul
 
 
 --
+-- Name: form_submissions Permitir inserção de submissões; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "Permitir inserção de submissões" ON public.form_submissions FOR INSERT WITH CHECK (true);
+
+
+--
 -- Name: arquivos Permitir inserção pública de arquivos; Type: POLICY; Schema: public; Owner: -
 --
 
@@ -124,6 +155,13 @@ CREATE POLICY "Permitir inserção pública de arquivos" ON public.arquivos FOR 
 --
 
 CREATE POLICY "Permitir inserção pública de formulários" ON public.formularios FOR INSERT WITH CHECK (true);
+
+
+--
+-- Name: form_submissions Permitir leitura de submissões; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY "Permitir leitura de submissões" ON public.form_submissions FOR SELECT USING (true);
 
 
 --
@@ -145,6 +183,12 @@ CREATE POLICY "Permitir leitura pública de formulários" ON public.formularios 
 --
 
 ALTER TABLE public.arquivos ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: form_submissions; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.form_submissions ENABLE ROW LEVEL SECURITY;
 
 --
 -- Name: formularios; Type: ROW SECURITY; Schema: public; Owner: -
